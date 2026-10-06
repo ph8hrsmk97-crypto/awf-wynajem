@@ -1,0 +1,530 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Wynajem obiektów AWF Warszawa</title>
+<link rel="icon" href="img/logo.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Source+Sans+3:wght@400;600;700&display=swap">
+<style>
+/* Układ: wąski nagłówek uczelni → zdjęciowe otwarcie → katalog (filtry + siatka) → kalkulator dwukolumnowy (konfiguracja | kosztorys) → sale → kontakt.
+   Motyw: tory bieżni – numerowane kroki kalkulatora wyglądają jak numery torów. */
+:root {
+  --green: #006341;        /* zieleń AWF z logotypu */
+  --gold: #B9975B;         /* złoto AWF z logotypu */
+  --bg: #F4F6F3;
+  --surface: #FFFFFF;
+  --surface-2: #EAF0EB;
+  --ink: #102A20;
+  --muted: #56685F;
+  --line: #D6DFD8;
+  --accent: var(--green);
+  --accent-ink: #FFFFFF;
+  --accent-soft: #DCEBE2;
+  --gold-ink: #7A5E2B;
+  --warn: #9A5B00;
+  --logo-tile: #FFFFFF;
+  --shadow: 0 1px 2px rgba(16,42,32,.06), 0 8px 24px rgba(16,42,32,.06);
+  --font-display: "Barlow Condensed", "Arial Narrow", "Roboto Condensed", sans-serif;
+  --font-body: "Source Sans 3", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --r: 10px;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0B1612; --surface: #12211B; --surface-2: #182B23; --ink: #E6EEE9; --muted: #9DB0A6; --line: #26392F;
+    --accent: #3BAA7B; --accent-ink: #06130E; --accent-soft: #173A2C; --gold-ink: #D5B67E; --warn: #E3A84B;
+    --logo-tile: #F3F1EA; --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.25); color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0B1612; --surface: #12211B; --surface-2: #182B23; --ink: #E6EEE9; --muted: #9DB0A6; --line: #26392F;
+  --accent: #3BAA7B; --accent-ink: #06130E; --accent-soft: #173A2C; --gold-ink: #D5B67E; --warn: #E3A84B;
+  --logo-tile: #F3F1EA; --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.25); color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { transition: none !important; } }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 400 16px/1.55 var(--font-body); -webkit-font-smoothing: antialiased; }
+img { max-width: 100%; display: block; }
+a { color: var(--accent); }
+h1, h2, h3 { font-family: var(--font-display); font-weight: 700; line-height: 1.05; text-wrap: balance; margin: 0; letter-spacing: .005em; }
+h2 { font-size: clamp(30px, 4vw, 42px); text-transform: uppercase; }
+h3 { font-size: 22px; }
+.wrap { max-width: 1240px; margin: 0 auto; padding-inline: 20px; }
+.eyebrow { font: 600 13px/1 var(--font-body); letter-spacing: .12em; text-transform: uppercase; color: var(--gold-ink); }
+.num { font-variant-numeric: tabular-nums; }
+:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; border-radius: 4px; }
+.btn { display: inline-flex; align-items: center; gap: 8px; font: 600 15px/1 var(--font-body); padding: 12px 18px; border-radius: 999px; border: 1.5px solid var(--accent); background: var(--accent); color: var(--accent-ink); cursor: pointer; text-decoration: none; transition: filter .15s; }
+.btn:hover { filter: brightness(1.08); }
+.btn.ghost { background: transparent; color: var(--accent); }
+.btn.small { padding: 8px 14px; font-size: 14px; }
+
+/* Pasek projektu */
+.concept { background: var(--gold); color: #2A1F0C; font-size: 13px; text-align: center; padding: 6px 16px; }
+
+/* Nagłówek */
+.top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; background: color-mix(in srgb, var(--surface) 92%, transparent); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+.top .wrap { display: flex; align-items: center; gap: 20px; min-height: 68px; flex-wrap: wrap; }
+.brand { display: flex; align-items: center; gap: 12px; text-decoration: none; color: var(--ink); min-width: 0; }
+.brand .tile { background: var(--logo-tile); border-radius: 8px; padding: 4px; width: 46px; height: 46px; flex: none; }
+.brand b { display: block; font: 700 17px/1.05 var(--font-display); text-transform: uppercase; color: var(--ink); letter-spacing: .02em; }
+.brand small { display: block; font-size: 12.5px; color: var(--muted); line-height: 1.2; }
+.nav { display: flex; gap: 4px; margin-left: auto; flex-wrap: wrap; }
+.nav a { text-decoration: none; color: var(--ink); font-weight: 600; font-size: 15px; padding: 8px 12px; border-radius: 999px; }
+.nav a:hover { background: var(--surface-2); }
+.nav a.cta { background: var(--accent); color: var(--accent-ink); }
+@media (max-width: 760px) { .nav { margin-left: 0; width: 100%; overflow-x: auto; flex-wrap: nowrap; padding-bottom: 8px; } .nav a { white-space: nowrap; } }
+
+/* Otwarcie */
+.hero { position: relative; color: #fff; background: #0A2B1E url("img/stadion-la.jpg") center 60%/cover; }
+.hero::before { content: ""; position: absolute; inset: 0; background: linear-gradient(100deg, rgba(0,50,32,.92) 0%, rgba(0,60,38,.78) 45%, rgba(0,40,26,.35) 100%); }
+.hero .wrap { position: relative; padding-block: 64px 56px; display: grid; gap: 28px; }
+.hero h1 { font-size: clamp(42px, 7vw, 84px); text-transform: uppercase; max-width: 14ch; }
+.hero h1 span { color: #E2C48C; }
+.hero p { max-width: 56ch; font-size: 18px; margin: 0; color: #E4EFE8; }
+.hero .actions { display: flex; gap: 12px; flex-wrap: wrap; }
+.hero .btn { background: #fff; color: #00452D; border-color: #fff; }
+.hero .btn.ghost { background: transparent; color: #fff; border-color: rgba(255,255,255,.7); }
+.facts { display: flex; flex-wrap: wrap; gap: 0; margin: 8px 0 0; padding: 0; list-style: none; border-top: 1px solid rgba(255,255,255,.25); max-width: 760px; }
+.facts li { padding: 14px 28px 0 0; margin-right: 28px; }
+.facts b { display: block; font: 700 34px/1 var(--font-display); color: #fff; font-variant-numeric: tabular-nums; }
+.facts span { font-size: 13.5px; color: #CFE1D6; }
+
+section.block { padding-block: 64px; }
+.head { display: flex; align-items: end; justify-content: space-between; gap: 16px 24px; flex-wrap: wrap; margin-bottom: 24px; }
+.head p { margin: 8px 0 0; color: var(--muted); max-width: 60ch; }
+
+/* Filtry */
+.filters { display: grid; gap: 12px; margin-bottom: 24px; }
+.filter-row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+.chip { font: 600 14px/1 var(--font-body); padding: 9px 14px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); cursor: pointer; }
+.chip:hover { border-color: var(--accent); }
+.chip[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.seg { display: inline-flex; border: 1px solid var(--line); border-radius: 999px; padding: 3px; background: var(--surface); }
+.seg button { font: 600 14px/1 var(--font-body); border: 0; background: transparent; color: var(--muted); padding: 8px 14px; border-radius: 999px; cursor: pointer; }
+.seg button[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
+.search { flex: 1 1 220px; min-width: 0; max-width: 340px; font: 400 15px var(--font-body); padding: 10px 14px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); }
+.count { color: var(--muted); font-size: 14px; margin-left: auto; }
+
+/* Karty obiektów */
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: 20px; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); overflow: hidden; display: flex; flex-direction: column; }
+.card .ph { aspect-ratio: 3/2; background: var(--surface-2); position: relative; overflow: hidden; }
+.card .ph img { width: 100%; height: 100%; object-fit: cover; transition: transform .4s; }
+.card:hover .ph img { transform: scale(1.03); }
+.badge { position: absolute; top: 10px; left: 10px; font: 600 12px/1 var(--font-body); letter-spacing: .06em; text-transform: uppercase; padding: 6px 9px; border-radius: 6px; background: rgba(8,30,20,.78); color: #fff; }
+.card .body { padding: 16px 18px 18px; display: flex; flex-direction: column; gap: 10px; flex: 1; }
+.card .place { font-size: 13.5px; color: var(--muted); }
+.specs { display: flex; gap: 16px; font-size: 14px; color: var(--muted); flex-wrap: wrap; }
+.specs b { color: var(--ink); font-variant-numeric: tabular-nums; }
+.tags { display: flex; gap: 6px; flex-wrap: wrap; }
+.tag { font-size: 12.5px; padding: 4px 8px; border-radius: 6px; background: var(--accent-soft); color: var(--ink); }
+.card .foot { margin-top: auto; padding-top: 12px; border-top: 1px dashed var(--line); display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+.price-from { font-size: 13px; color: var(--muted); line-height: 1.2; }
+.price-from b { display: block; font: 700 24px/1 var(--font-display); color: var(--ink); font-variant-numeric: tabular-nums; }
+.card .foot .btns { display: flex; gap: 6px; }
+
+/* Placeholder bez zdjęcia */
+.nophoto { width: 100%; height: 100%; display: grid; place-items: center; text-align: center; color: var(--muted); font: 600 15px/1.3 var(--font-display); text-transform: uppercase; letter-spacing: .04em;
+  background: repeating-linear-gradient(90deg, transparent 0 46px, color-mix(in srgb, var(--accent) 18%, transparent) 46px 48px), var(--surface-2); }
+.nophoto small { display: block; font: 400 12.5px var(--font-body); text-transform: none; letter-spacing: 0; margin-top: 4px; }
+
+/* Kalkulator */
+.calc-section { background: var(--surface); border-block: 1px solid var(--line); }
+.calc { display: grid; grid-template-columns: minmax(0, 1fr) 400px; gap: 32px; align-items: start; }
+@media (max-width: 980px) { .calc { grid-template-columns: minmax(0, 1fr); } }
+.step { display: grid; grid-template-columns: 48px minmax(0, 1fr); gap: 0 16px; padding-block: 20px; border-top: 1px solid var(--line); }
+.step:first-child { border-top: 0; padding-top: 0; }
+.lane { width: 48px; height: 48px; border-radius: 8px; display: grid; place-items: center; font: 700 28px/1 var(--font-display); color: #fff; background: var(--green); box-shadow: inset 0 -4px 0 rgba(0,0,0,.15); }
+.step h3 { margin: 4px 0 4px; }
+.step .hint { color: var(--muted); font-size: 14px; margin: 0 0 12px; }
+.choices { display: flex; flex-wrap: wrap; gap: 8px; }
+.purpose { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 8px; }
+.pcard { text-align: left; border: 1.5px solid var(--line); background: var(--bg); color: var(--ink); border-radius: var(--r); padding: 12px 14px; cursor: pointer; font: inherit; }
+.pcard b { display: block; font-size: 15.5px; }
+.pcard span { font-size: 13px; color: var(--muted); line-height: 1.3; display: block; margin-top: 2px; }
+.pcard[aria-pressed="true"] { border-color: var(--accent); background: var(--accent-soft); }
+.pcard:disabled { opacity: .45; cursor: not-allowed; }
+label.field { display: grid; gap: 6px; font-size: 14px; font-weight: 600; }
+label.field small { font-weight: 400; color: var(--muted); }
+select, input[type="number"], input[type="text"], input[type="email"], input[type="date"], textarea {
+  font: 400 16px var(--font-body); color: var(--ink); background: var(--bg); border: 1.5px solid var(--line); border-radius: 8px; padding: 10px 12px; width: 100%; min-width: 0; }
+select:focus, input:focus, textarea:focus { border-color: var(--accent); outline: none; }
+.row { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; }
+.options { display: grid; gap: 8px; margin-top: 12px; }
+.opt { display: flex; align-items: center; gap: 12px; border: 1.5px solid var(--line); border-radius: 8px; padding: 10px 14px; cursor: pointer; background: var(--bg); }
+.opt:has(input:checked) { border-color: var(--accent); background: var(--accent-soft); }
+.opt input { accent-color: var(--green); width: 18px; height: 18px; flex: none; }
+.opt .lbl { flex: 1; min-width: 0; }
+.opt .pr { font: 600 17px/1.1 var(--font-display); text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.opt .pr small { display: block; font: 400 12px var(--font-body); color: var(--muted); }
+.stepper { display: flex; align-items: stretch; border: 1.5px solid var(--line); border-radius: 8px; overflow: hidden; background: var(--bg); }
+.stepper button { width: 42px; border: 0; background: var(--surface-2); color: var(--ink); font: 700 20px var(--font-body); cursor: pointer; }
+.stepper input { border: 0; border-radius: 0; text-align: center; background: transparent; -moz-appearance: textfield; }
+.stepper input::-webkit-inner-spin-button { -webkit-appearance: none; }
+.note { font-size: 13.5px; color: var(--muted); margin: 10px 0 0; }
+.note.warn { color: var(--warn); }
+details.ex { border: 1px solid var(--line); border-radius: 8px; background: var(--bg); }
+details.ex + details.ex { margin-top: 8px; }
+details.ex summary { cursor: pointer; padding: 12px 14px; font-weight: 600; display: flex; justify-content: space-between; gap: 8px; }
+details.ex summary .n { color: var(--muted); font-weight: 400; font-size: 14px; }
+.ex-list { display: grid; gap: 2px; padding: 0 10px 10px; }
+.ex-item { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 10px; padding: 8px 4px; border-top: 1px dashed var(--line); font-size: 14.5px; }
+.ex-item input[type="checkbox"] { accent-color: var(--green); width: 18px; height: 18px; }
+.ex-item .u { display: block; color: var(--muted); font-size: 12.5px; }
+.ex-item input[type="number"] { width: 84px; padding: 6px 8px; font-size: 15px; }
+
+/* Kosztorys */
+.receipt { position: sticky; top: calc(env(safe-area-inset-top, 0px) + 88px); background: var(--bg); border: 1px solid var(--line); border-radius: 14px; box-shadow: var(--shadow); overflow: hidden; }
+@media (max-width: 980px) { .receipt { position: static; } }
+.receipt .rh { padding: 18px 20px 14px; background: var(--green); color: #fff; }
+.receipt .rh .eyebrow { color: #E2C48C; }
+.receipt .rh h3 { font-size: 24px; margin-top: 6px; }
+.receipt .rh p { margin: 4px 0 0; font-size: 14px; color: #D3E6DA; }
+.lines { list-style: none; margin: 0; padding: 6px 20px; }
+.lines li { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 12px; padding: 10px 0; border-bottom: 1px dashed var(--line); font-size: 14.5px; }
+.lines li small { grid-column: 1; color: var(--muted); font-size: 12.5px; }
+.lines li .amt { font-variant-numeric: tabular-nums; font-weight: 600; text-align: right; white-space: nowrap; }
+.lines li.ind .amt { color: var(--warn); font-weight: 600; font-size: 13px; }
+.totals { padding: 12px 20px 4px; display: grid; gap: 4px; font-variant-numeric: tabular-nums; }
+.totals div { display: flex; justify-content: space-between; font-size: 14.5px; color: var(--muted); }
+.totals .grand { margin-top: 6px; padding-top: 10px; border-top: 2px solid var(--ink); color: var(--ink); align-items: baseline; }
+.totals .grand span { font-weight: 700; }
+.totals .grand b { font: 700 38px/1 var(--font-display); }
+.receipt .rf { padding: 12px 20px 20px; display: grid; gap: 10px; }
+.receipt .rf p { margin: 0; font-size: 12.5px; color: var(--muted); }
+.toggle { display: flex; align-items: center; gap: 8px; font-size: 14px; cursor: pointer; }
+.toggle input { accent-color: var(--green); width: 18px; height: 18px; }
+
+/* Formularz zapytania */
+dialog { border: 0; border-radius: 14px; padding: 0; max-width: min(720px, calc(100vw - 32px)); width: 100%; background: var(--surface); color: var(--ink); box-shadow: 0 30px 80px rgba(0,0,0,.35); }
+dialog::backdrop { background: rgba(5,20,14,.6); }
+.dlg-h { display: flex; justify-content: space-between; align-items: start; gap: 16px; padding: 20px 24px 0; }
+.dlg-b { padding: 16px 24px 24px; display: grid; gap: 14px; }
+.x { border: 0; background: var(--surface-2); color: var(--ink); width: 38px; height: 38px; border-radius: 999px; font-size: 20px; cursor: pointer; flex: none; }
+textarea { min-height: 90px; resize: vertical; }
+pre.out { white-space: pre-wrap; background: var(--bg); border: 1px solid var(--line); border-radius: 8px; padding: 12px; font: 13px/1.5 ui-monospace, "SF Mono", Menlo, monospace; max-height: 260px; overflow: auto; margin: 0; }
+
+/* Szczegóły obiektu */
+.gal { display: grid; gap: 8px; padding: 0 24px; }
+.gal .main { aspect-ratio: 16/9; border-radius: 10px; overflow: hidden; background: var(--surface-2); }
+.gal .main img { width: 100%; height: 100%; object-fit: cover; }
+.thumbs { display: flex; gap: 8px; }
+.thumbs button { padding: 0; border: 2px solid transparent; border-radius: 6px; overflow: hidden; width: 84px; aspect-ratio: 3/2; cursor: pointer; background: none; }
+.thumbs button[aria-current="true"] { border-color: var(--accent); }
+.thumbs img { width: 100%; height: 100%; object-fit: cover; }
+.ptable { width: 100%; border-collapse: collapse; font-size: 14.5px; }
+.ptable th { text-align: left; font: 600 12px/1 var(--font-body); letter-spacing: .1em; text-transform: uppercase; color: var(--gold-ink); padding: 14px 0 6px; }
+.ptable td { padding: 8px 0; border-top: 1px dashed var(--line); vertical-align: top; }
+.ptable td:last-child { text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; font-weight: 600; padding-left: 12px; }
+ul.feat { margin: 0; padding-left: 18px; color: var(--muted); }
+
+/* Sale */
+.rooms-tools { display: flex; gap: 12px; flex-wrap: wrap; align-items: end; margin-bottom: 16px; }
+.rooms-tools label.field { flex: 0 1 200px; }
+.table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: var(--r); background: var(--surface); }
+table.rooms { width: 100%; border-collapse: collapse; font-size: 15px; min-width: 640px; }
+table.rooms th { text-align: left; font: 600 12px/1 var(--font-body); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); padding: 12px 14px; background: var(--surface-2); }
+table.rooms td { padding: 10px 14px; border-top: 1px solid var(--line); }
+table.rooms td.n { font-variant-numeric: tabular-nums; text-align: right; white-space: nowrap; }
+table.rooms th.n { text-align: right; }
+table.rooms tr.bld td { background: var(--bg); font: 700 15px var(--font-display); text-transform: uppercase; letter-spacing: .04em; color: var(--gold-ink); }
+.eq { display: inline-flex; gap: 4px; flex-wrap: wrap; }
+.eq span { font-size: 12px; padding: 2px 7px; border-radius: 5px; border: 1px solid var(--line); color: var(--muted); }
+.linkbtn { border: 0; background: none; color: var(--accent); font: 600 14px var(--font-body); cursor: pointer; padding: 4px 0; }
+
+/* Proces i kontakt */
+.process { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 0; counter-reset: s; border-top: 4px solid var(--green); }
+.process li { list-style: none; padding: 18px 20px 4px 0; position: relative; }
+.process li b { font: 700 20px var(--font-display); text-transform: uppercase; display: block; margin-bottom: 4px; }
+.process li b::before { counter-increment: s; content: counter(s) " · "; color: var(--gold-ink); }
+.process li p { margin: 0; color: var(--muted); font-size: 15px; }
+.contacts { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; margin-top: 32px; }
+.contact { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 18px 20px; }
+.contact b { font: 700 20px var(--font-display); display: block; }
+.contact div { font-size: 15px; user-select: all; }
+.contact .muted { color: var(--muted); user-select: none; font-size: 13px; margin-top: 8px; }
+
+footer { background: #06261A; color: #CFE1D6; padding-block: 40px; font-size: 14px; }
+footer .wrap { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 24px; align-items: start; }
+footer .tile { background: #F3F1EA; border-radius: 8px; padding: 6px; width: 64px; height: 64px; }
+footer a { color: #E2C48C; }
+footer p { margin: 0 0 6px; }
+@media (max-width: 560px) { footer .wrap { grid-template-columns: 1fr; } }
+.toast { position: fixed; bottom: calc(env(safe-area-inset-bottom, 0px) + 20px); left: 50%; transform: translateX(-50%); background: var(--ink); color: var(--bg); padding: 10px 16px; border-radius: 999px; font-size: 14px; z-index: 50; }
+
+/* Przełącznik języka */
+.lang { display: inline-flex; border: 1px solid var(--line); border-radius: 999px; padding: 2px; margin-left: 4px; }
+.lang button { border: 0; background: transparent; color: var(--muted); font: 700 13px/1 var(--font-body); padding: 7px 10px; border-radius: 999px; cursor: pointer; letter-spacing: .04em; }
+.lang button[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
+/* Krok 4: terminy */
+.mode { margin-bottom: 14px; }
+.wd { display: flex; gap: 6px; flex-wrap: wrap; }
+.wd label { position: relative; }
+.wd input { position: absolute; opacity: 0; inset: 0; cursor: pointer; }
+.wd span { display: grid; place-items: center; min-width: 46px; padding: 9px 8px; border: 1.5px solid var(--line); border-radius: 8px; font-weight: 600; font-size: 14px; background: var(--bg); }
+.wd input:checked + span { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.wd input:focus-visible + span { outline: 3px solid var(--gold); outline-offset: 2px; }
+.fieldset { display: grid; gap: 6px; font-size: 14px; font-weight: 600; margin-top: 12px; }
+.sum { margin-top: 14px; padding: 12px 14px; border-radius: 8px; background: var(--accent-soft); font-size: 15px; display: grid; gap: 4px; }
+.sum b { font: 700 22px/1.1 var(--font-display); }
+.sum small { color: var(--muted); font-size: 13px; }
+.sum.err { background: transparent; border: 1.5px solid var(--warn); color: var(--warn); }
+.warns { display: grid; gap: 4px; margin-top: 8px; }
+.warns p { margin: 0; font-size: 13.5px; color: var(--warn); }
+.lead { margin: 0; color: var(--muted); font-size: 14.5px; }
+</style>
+</head>
+<body>
+
+<div class="concept" data-i18n="concept"></div>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#top">
+      <img class="tile" src="img/logo.svg" alt="AWF Warszawa">
+      <span><b data-i18n="brandName"></b><small data-i18n="brandSub"></small></span>
+    </a>
+    <nav class="nav">
+      <a href="#obiekty" data-i18n="navVenues"></a>
+      <a href="#sale" data-i18n="navRooms"></a>
+      <a href="#jak" data-i18n="navHow"></a>
+      <a href="#kontakt" data-i18n="navContact"></a>
+      <a class="cta" href="#kalkulator" data-i18n="navCta"></a>
+      <span class="lang" role="group" aria-label="Język / Language">
+        <button type="button" data-lang="pl" aria-pressed="true" lang="pl">PL</button>
+        <button type="button" data-lang="en" aria-pressed="false" lang="en">EN</button>
+      </span>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="wrap">
+      <span class="eyebrow" style="color:#E2C48C" data-i18n="heroEyebrow"></span>
+      <h1 data-i18n-html="heroH1"></h1>
+      <p data-i18n="heroP"></p>
+      <div class="actions">
+        <a class="btn" href="#kalkulator" data-i18n="heroBtn1"></a>
+        <a class="btn ghost" href="#obiekty" data-i18n="heroBtn2"></a>
+      </div>
+      <ul class="facts">
+        <li><b id="fact-fac"></b><span data-i18n="fact1"></span></li>
+        <li><b id="fact-rooms"></b><span data-i18n="fact2"></span></li>
+        <li><b>7–22</b><span data-i18n="fact3"></span></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="block" id="obiekty">
+    <div class="wrap">
+      <div class="head">
+        <div>
+          <span class="eyebrow" data-i18n="catEyebrow"></span>
+          <h2 data-i18n="catH2"></h2>
+          <p data-i18n="catP"></p>
+        </div>
+      </div>
+      <div class="filters">
+        <div class="filter-row">
+          <div class="seg" role="group" id="typeSeg">
+            <button type="button" data-type="all" aria-pressed="true" data-i18n="typeAll"></button>
+            <button type="button" data-type="indoor" aria-pressed="false" data-i18n="typeIndoor"></button>
+            <button type="button" data-type="outdoor" aria-pressed="false" data-i18n="typeOutdoor"></button>
+          </div>
+          <input class="search" id="q" type="text" data-i18n-ph="searchPh" data-i18n-aria="searchAria">
+          <span class="count" id="count"></span>
+        </div>
+        <div class="filter-row" id="tagChips" role="group"></div>
+      </div>
+      <div class="grid" id="grid"></div>
+    </div>
+  </section>
+
+  <section class="block calc-section" id="kalkulator">
+    <div class="wrap">
+      <div class="head">
+        <div>
+          <span class="eyebrow" data-i18n="calcEyebrow"></span>
+          <h2 data-i18n="calcH2"></h2>
+          <p data-i18n="calcP"></p>
+        </div>
+      </div>
+
+      <div class="calc">
+        <div>
+          <div class="step">
+            <div class="lane">1</div>
+            <div>
+              <h3 data-i18n="s1H"></h3>
+              <p class="hint" data-i18n="s1Hint"></p>
+              <div class="choices" id="clients"></div>
+            </div>
+          </div>
+
+          <div class="step">
+            <div class="lane">2</div>
+            <div>
+              <h3 data-i18n="s2H"></h3>
+              <p class="hint" data-i18n="s2Hint"></p>
+              <div class="purpose" id="purposes"></div>
+            </div>
+          </div>
+
+          <div class="step">
+            <div class="lane">3</div>
+            <div>
+              <h3 data-i18n="s3H"></h3>
+              <p class="hint" id="objHint"></p>
+              <div class="row" id="roomFilters" hidden>
+                <label class="field"><span data-i18n="minCap"></span>
+                  <input id="minCap" type="number" min="0" step="5" value="0" inputmode="numeric">
+                </label>
+              </div>
+              <label class="field" style="margin-top:10px"><span data-i18n="facility"></span>
+                <select id="facility"></select>
+              </label>
+              <div class="options" id="options" role="radiogroup"></div>
+              <p class="note" id="optNote" hidden></p>
+            </div>
+          </div>
+
+          <div class="step">
+            <div class="lane">4</div>
+            <div>
+              <h3 data-i18n="s4H"></h3>
+              <p class="hint" id="timeHint"></p>
+              <div id="timeFields"></div>
+              <div id="timeSummary"></div>
+            </div>
+          </div>
+
+          <div class="step">
+            <div class="lane">5</div>
+            <div>
+              <h3 data-i18n="s5H"></h3>
+              <p class="hint" data-i18n="s5Hint"></p>
+              <div id="extras"></div>
+            </div>
+          </div>
+        </div>
+
+        <aside class="receipt" aria-live="polite">
+          <div class="rh">
+            <span class="eyebrow" data-i18n="rEyebrow"></span>
+            <h3 id="rTitle"></h3>
+            <p id="rSub"></p>
+          </div>
+          <ul class="lines" id="lines"></ul>
+          <div class="totals">
+            <div><span data-i18n="tNet"></span><span id="tNet"></span></div>
+            <div><span data-i18n="tVat"></span><span id="tVat"></span></div>
+            <div class="grand"><span data-i18n="tGross"></span><b id="tGross"></b></div>
+          </div>
+          <div class="rf">
+            <p id="indivNote" hidden data-i18n="indivNote"></p>
+            <button class="btn" type="button" id="askBtn" data-i18n="askBtn"></button>
+            <p data-i18n="rFoot"></p>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="sale">
+    <div class="wrap">
+      <div class="head">
+        <div>
+          <span class="eyebrow" data-i18n="roomsEyebrow"></span>
+          <h2 data-i18n="roomsH2"></h2>
+          <p data-i18n="roomsP"></p>
+        </div>
+      </div>
+      <div class="rooms-tools">
+        <label class="field"><span data-i18n="roomsCap"></span>
+          <input id="roomCap" type="number" min="0" step="5" value="0" inputmode="numeric">
+        </label>
+        <label class="field"><span data-i18n="roomsBld"></span>
+          <select id="roomBld"></select>
+        </label>
+        <label class="toggle" style="margin-bottom:10px"><input type="checkbox" id="roomProj"> <span data-i18n="roomsProj"></span></label>
+      </div>
+      <div class="table-wrap">
+        <table class="rooms">
+          <thead><tr><th data-i18n="thRoom"></th><th class="n" data-i18n="thCap"></th><th data-i18n="thEq"></th><th class="n" data-i18n="thH"></th><th class="n" data-i18n="thDay"></th><th></th></tr></thead>
+          <tbody id="roomRows"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="jak" style="padding-top:0">
+    <div class="wrap">
+      <div class="head"><div><span class="eyebrow" data-i18n="howEyebrow"></span><h2 data-i18n="howH2"></h2></div></div>
+      <ol class="process" style="padding:0;margin:0">
+        <li><b data-i18n="how1B"></b><p data-i18n="how1P"></p></li>
+        <li><b data-i18n="how2B"></b><p data-i18n="how2P"></p></li>
+        <li><b data-i18n="how3B"></b><p data-i18n="how3P"></p></li>
+        <li><b data-i18n="how4B"></b><p data-i18n="how4P"></p></li>
+      </ol>
+      <div class="contacts" id="kontakt"></div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <img class="tile" src="img/logo.svg" alt="">
+    <div>
+      <p data-i18n-html="footAddr"></p>
+      <p id="srcBase"></p>
+      <p id="srcChange"></p>
+      <p><span data-i18n="par2"></span>
+        <a id="bipLink" href="#" target="_blank" rel="noopener" data-i18n="bipLink"></a> ·
+        <a href="https://www.awf.edu.pl/__data/assets/pdf_file/0007/72799/PLAN-AWF-OGOLNY-2026_mapa-z-opisem_POP-2.pdf" target="_blank" rel="noopener" data-i18n="planLink"></a></p>
+    </div>
+  </div>
+</footer>
+
+<dialog id="detail" aria-labelledby="dTitle"></dialog>
+<dialog id="ask" aria-labelledby="aTitle">
+  <div class="dlg-h">
+    <div><span class="eyebrow" data-i18n="askEyebrow"></span><h2 id="aTitle" style="font-size:30px" data-i18n="askH"></h2></div>
+    <button class="x" type="button" data-close data-i18n-aria="close">×</button>
+  </div>
+  <form class="dlg-b" id="askForm">
+    <p class="lead" data-i18n="askLead"></p>
+    <div class="row">
+      <label class="field"><span data-i18n="aName"></span><input id="aName" type="text" required autocomplete="organization"></label>
+      <label class="field"><span data-i18n="aPerson"></span><input id="aPerson" type="text" required autocomplete="name"></label>
+    </div>
+    <div class="row">
+      <label class="field"><span data-i18n="aEmail"></span><input id="aEmail" type="email" required autocomplete="email"></label>
+      <label class="field"><span data-i18n="aPhone"></span><input id="aPhone" type="text" autocomplete="tel" inputmode="tel"></label>
+      <label class="field"><span><span data-i18n="aNip"></span> <small data-i18n="aOptional"></small></span><input id="aNip" type="text" inputmode="numeric"></label>
+    </div>
+    <label class="field"><span data-i18n="aNotes"></span><textarea id="aNotes" data-i18n-ph="aNotesPh"></textarea></label>
+    <button class="btn" type="submit" data-i18n="aSubmit"></button>
+    <div id="askOut" hidden>
+      <pre class="out" id="askText"></pre>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px">
+        <button class="btn small" type="button" id="copyBtn" data-i18n="aCopy"></button>
+        <a class="btn small ghost" id="mailBtn" href="#" data-i18n="aMail"></a>
+      </div>
+      <p class="note" data-i18n="aAfter"></p>
+    </div>
+  </form>
+</dialog>
+
+<script src="data.js"></script>
+<script src="i18n.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
