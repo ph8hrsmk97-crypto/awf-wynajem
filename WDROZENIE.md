@@ -12,7 +12,7 @@ Pliki `.md` to dokumentacja i nie muszą trafić na serwer.
 2. **Ustawienia w `data.js`** (blok `SITE` na początku pliku):
    - `concept: false` – ukrywa pasek „Projekt koncepcyjny”,
    - `enquiryEmail: '…'` – adres, na który przycisk „Otwórz w programie pocztowym” kieruje zapytanie
-     (np. wspólna skrzynka działu wynajmu; bez tego pola klient sam wpisuje adresata).
+     – ustawione: `wynajem@awf.edu.pl`; **IT: potwierdzić, że skrzynka istnieje i ktoś ją obsługuje**.
 3. **Czcionki (RODO)** – strona pobiera czcionki z Google Fonts, przez co adres IP odwiedzającego trafia do Google.
    Zalecane jest hostowanie czcionek na serwerze AWF: Barlow Condensed i Source Sans 3, obie na licencji OFL.
    Wystarczy podmienić `<link … fonts.googleapis.com …>` w `index.html` na lokalne `@font-face`.

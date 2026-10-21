@@ -17,7 +17,7 @@
 /* Ustawienia wdrożenia – do zmiany przez IT przy publikacji produkcyjnej (patrz WDROZENIE.md). */
 const SITE = {
   concept: true,      /* true = pasek „Projekt koncepcyjny” na górze strony; w produkcji: false */
-  enquiryEmail: ''    /* adres, na który przycisk „Otwórz w programie pocztowym” kieruje zapytanie, np. dedykowana skrzynka działu wynajmu */
+  enquiryEmail: 'wynajem@awf.edu.pl'    /* adres, na który przycisk „Otwórz w programie pocztowym” kieruje zapytanie, np. dedykowana skrzynka działu wynajmu */
 };
 
 const PRICING_SOURCE = {
