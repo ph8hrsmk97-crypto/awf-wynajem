@@ -598,6 +598,7 @@
     r.lines.forEach(l => L.push(`- ${l.label}: ${l.amount == null ? t('indivShort') : zl(l.amount)} (${l.detail})`));
     L.push(t('qTotals', { n: zl(r.net), v: zl(vat), g: zl(r.net + vat) }));
     if (v('aNotes')) L.push('', t('qNotes'), v('aNotes'));
+    L.push('', t('disclaimer'));
     return L.join('\n');
   }
   $('#askBtn').addEventListener('click', () => {
@@ -608,7 +609,7 @@
     e.preventDefault();
     const txt = inquiryText();
     $('#askText').textContent = txt;
-    $('#mailBtn').href = `mailto:?subject=${encodeURIComponent(t('qSubject', { x: currentName() }))}&body=${encodeURIComponent(txt)}`;
+    $('#mailBtn').href = `mailto:${SITE.enquiryEmail}?subject=${encodeURIComponent(t('qSubject', { x: currentName() }))}&body=${encodeURIComponent(txt)}`;
     $('#askOut').hidden = false;
   });
   $('#copyBtn').addEventListener('click', () => {
@@ -624,6 +625,7 @@
   /* ---------- Teksty stałe i przełączanie języka ---------- */
   function applyStatic() {
     document.documentElement.lang = lang;
+    $('#conceptBar').hidden = !SITE.concept;
     document.title = lang === 'pl' ? 'Wynajem obiektów AWF Warszawa' : 'AWF Warsaw Venue Hire';
     $$('[data-i18n]').forEach(el => { el.textContent = t(el.dataset.i18n); });
     $$('[data-i18n-html]').forEach(el => { el.innerHTML = t(el.dataset.i18nHtml); });

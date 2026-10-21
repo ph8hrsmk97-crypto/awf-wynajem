@@ -14,6 +14,12 @@
  *   day   – stawka za dzień (8 h) – sale w budynku nr 25
  */
 
+/* Ustawienia wdrożenia – do zmiany przez IT przy publikacji produkcyjnej (patrz WDROZENIE.md). */
+const SITE = {
+  concept: true,      /* true = pasek „Projekt koncepcyjny” na górze strony; w produkcji: false */
+  enquiryEmail: ''    /* adres, na który przycisk „Otwórz w programie pocztowym” kieruje zapytanie, np. dedykowana skrzynka działu wynajmu */
+};
+
 const PRICING_SOURCE = {
   base: 'Zarządzenie Kanclerza AWF Warszawa nr 8/2024/2025 z 16 grudnia 2024 r.',
   change: 'Zarządzenie Kanclerza AWF Warszawa nr 63/2025/2026 z 30 lipca 2026 r., obowiązuje od 1 sierpnia 2026 r.',
