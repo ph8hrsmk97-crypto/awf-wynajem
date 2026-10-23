@@ -6,6 +6,9 @@
 - `app.js` – logika kalkulatora, harmonogramu, filtrów i formularza zapytania
 - `i18n.js` – teksty po polsku i angielsku (interfejs + tłumaczenia nazw z cennika)
 - `NAZWY.md` – zestawienie nazw do ujednolicenia między stroną a cennikiem
+- `deklaracja-dostepnosci.html` – projekt deklaracji dostępności (do uzupełnienia przez koordynatora)
+- `WDROZENIE.md` – instrukcja dla IT, wyniki samooceny dostępności
+- `fonts/` – czcionki hostowane lokalnie (RODO)
 - `img/` – logotypy i zdjęcia pobrane z awf.edu.pl
 
 ## Ustalenia z AWF (06.10.2026)

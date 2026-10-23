@@ -1,11 +1,33 @@
 # Wdrożenie produkcyjne – lista kontrolna dla IT
 
+> **Stan na 2026-10-23:** strona działa na https://wynajem.awf.edu.pl (na razie tylko w sieci pracowniczej).
+> Repozytorium zawiera już wersję produkcyjną: lokalne czcionki (`fonts/`), `concept: false`, bez blokady indeksowania,
+> z poprawionymi zakresami `unicode-range` oraz nowymi plikami poniżej. Wystarczy podmienić pliki na serwerze.
+
+## Zmiany od pierwszego wdrożenia (do podmiany na serwerze)
+
+- `index.html` – poprawione `unicode-range` w 5 blokach `@font-face` (było `U+20AD-C0` / `U+20AD-C4`),
+  link „Przejdź do treści” dla użytkowników klawiatury, mocniejsza nakładka na zdjęciu w nagłówku (kontrast WCAG AA także na telefonie),
+  link do deklaracji dostępności w stopce, metatag `deklaracja-dostępności`.
+- `app.js`, `i18n.js` – opisy miniatur zdjęć („Zdjęcie 1 z 2”), nowe teksty PL/EN.
+- `deklaracja-dostepnosci.html` – **nowy plik**, projekt deklaracji dostępności (do uzupełnienia przez koordynatora ds. dostępności).
+- `fonts/` – te same pliki co na serwerze (Fontsource, licencja OFL), dodane do repozytorium.
+
+## Uwagi do konfiguracji serwera (z testu 2026-10-23)
+
+- Cloudflare dokleja do strony skrypt wykrywania botów (`/cdn-cgi/challenge-platform/…`), który blokuje CSP – w konsoli przeglądarki jest błąd.
+  Strona działa; można wyłączyć tę funkcję dla subdomeny albo zostawić.
+- CSP nadal dopuszcza `fonts.googleapis.com` i `fonts.gstatic.com` – można je usunąć, czcionki są lokalne.
+- Jeśli włączona jest analityka Cloudflare (`static.cloudflareinsights.com`), należy ją uwzględnić w polityce prywatności.
+
+## Informacje ogólne
+
 Strona jest statyczna: HTML, CSS i JavaScript, bez backendu, bazy danych i ciasteczek.
 Przeglądarka zapisuje lokalnie (localStorage) tylko wybrany język PL/EN.
 Do publikacji potrzebne są pliki: `index.html`, `data.js`, `i18n.js`, `app.js` i katalog `img/`.
 Pliki `.md` to dokumentacja i nie muszą trafić na serwer.
 
-## Do zmiany przed publikacją
+## Lista kontrolna (pierwsze wdrożenie – punkty 1–3 wykonane przez IT)
 
 1. **Indeksowanie** – w `index.html` usunąć `<meta name="robots" content="noindex, nofollow">`.
    Ta blokada chroni wersję prototypową na GitHubie.
@@ -20,9 +42,8 @@ Pliki `.md` to dokumentacja i nie muszą trafić na serwer.
    (pakiety 5 h / 12 h, godziny nocne, dzień montażowy, VAT 23%).
    Cały cennik jest w `data.js`, a każda zmiana zarządzenia oznacza edycję tylko tego pliku.
 5. **Linki zewnętrzne** – sprawdzić, czy adresy podstron obiektów na awf.edu.pl, BIP i plan kampusu (PDF) są aktualne.
-6. **Dostępność cyfrowa** – uczelnia publiczna musi spełniać ustawę z 4.04.2019 r. o dostępności cyfrowej.
-   Trzeba przeprowadzić audyt WCAG 2.1 AA i opublikować deklarację dostępności dla subdomeny.
-   W projekcie są już: kontrast w trybie jasnym i ciemnym, widoczny fokus, etykiety pól, teksty alternatywne i obsługa klawiatury.
+6. **Dostępność cyfrowa** – projekt deklaracji jest w `deklaracja-dostepnosci.html` (link w stopce każdej strony).
+   Przed publikacją koordynator ds. dostępności uzupełnia pola oznaczone na żółto i usuwa żółte ostrzeżenie na górze. Szczegóły w sekcji niżej.
 7. **Serwer** – HTTPS. Proponowane nagłówki bezpieczeństwa: Content-Security-Policy z `script-src 'self'`,
    `img-src 'self' data:`, `style-src 'self' 'unsafe-inline'` (style są osadzone w stronie),
    a do tego `X-Content-Type-Options: nosniff` i `Referrer-Policy: strict-origin-when-cross-origin`.
@@ -50,3 +71,24 @@ Pliki `.md` to dokumentacja i nie muszą trafić na serwer.
 | 6 | Szkolenie → Budynek nr 25 → Pakiet dwóch sal → Najem na cały dzień, 2 dni | 1 680 × 2 = **3 360,00 zł** |
 | 7 | Formularz zapytania: wypełnić pola, „Przygotuj treść zapytania” | treść z terminami, kosztorysem i zastrzeżeniem; działa kopiowanie i otwieranie poczty |
 | 8 | Przełącznik EN | wszystkie teksty, nazwy obiektów i treść zapytania po angielsku |
+
+## Deklaracja dostępności – co uzupełnić (koordynator ds. dostępności)
+
+Projekt: `deklaracja-dostepnosci.html`, zgodny ze strukturą Ministerstwa Cyfryzacji
+(„Warunki techniczne publikacji oraz struktura dokumentu elektronicznego Deklaracji Dostępności” – obowiązkowe formuły i identyfikatory `a11y-*`).
+
+Do uzupełnienia (pola na żółto):
+- daty: publikacji strony dla wszystkich, ostatniej istotnej aktualizacji, sporządzenia deklaracji (format RRRR-MM-DD),
+- osoba kontaktowa i telefon; **adres e-mail do potwierdzenia** – w deklaracji serwisu awf.edu.pl adres zapisano jako „pełnomocnik.ozn@awf.edu.pl” (z literą „ł”), co prawdopodobnie jest błędem; w projekcie wpisano „pelnomocnik.ozn@awf.edu.pl”,
+- kod pocztowy do skarg – w deklaracji awf.edu.pl występują dwa różne: 00-968 i 01-986,
+- dostępność architektoniczna obiektów sportowych do wynajęcia (wejścia, szatnie, trybuny, pętle indukcyjne),
+- wstęp z psem asystującym (obowiązkowy element; brak go w deklaracji awf.edu.pl),
+- tłumacz PJM online (czy jest możliwy).
+
+Wyniki samooceny (2026-10-23):
+- automatyczny test axe-core 4.10 (WCAG 2.1 A i AA): deklaracja – 0 błędów; strona główna – zgłoszenia wyłącznie fałszywie pozytywne
+  (tekst na zdjęciu z nakładką i w ciemnej stopce; narzędzie nie odczytuje tła), sprawdzone ręcznie,
+- ręczne obliczenie kontrastu wszystkich kolorów tekstu w trybie jasnym i ciemnym – wszystkie co najmniej 4,5:1 (najgorszy przypadek: jasne niebo pod nakładką),
+- obsługa klawiaturą: link „Przejdź do treści”, widoczny fokus, okna dialogowe zamykane klawiszem Esc,
+- **nie wykonano** testu z czytnikiem ekranu (NVDA / VoiceOver) – zalecany przed zatwierdzeniem deklaracji,
+- status w projekcie: „częściowo zgodna” (opisy alternatywne zdjęć zawierają tylko nazwę obiektu).

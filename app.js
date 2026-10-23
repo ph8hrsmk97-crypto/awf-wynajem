@@ -516,7 +516,7 @@
       <div class="dlg-h"><div><span class="eyebrow">${esc(d(f.place))}</span><h2 id="dTitle" style="font-size:32px">${esc(d(f.name))}</h2></div>
         <button class="x" type="button" data-close aria-label="${t('close')}">×</button></div>
       <div class="gal" style="margin-top:14px"><div class="main" id="galMain">${photo(f)}</div>
-        ${f.photos.length > 1 ? `<div class="thumbs">${f.photos.map((p, i) => `<button type="button" data-ph="${i}" aria-current="${i === 0}" aria-label="${i + 1}"><img src="img/${p}" alt=""></button>`).join('')}</div>` : ''}</div>
+        ${f.photos.length > 1 ? `<div class="thumbs">${f.photos.map((p, i) => `<button type="button" data-ph="${i}" aria-current="${i === 0}" aria-label="${t('photoN', { i: i + 1, n: f.photos.length })}"><img src="img/${p}" alt=""></button>`).join('')}</div>` : ''}</div>
       <div class="dlg-b">
         <div class="specs">${specs(f)}</div>
         <div class="tags">${f.tags.map(x => `<span class="tag">${esc(d(x))}</span>`).join('')}</div>
