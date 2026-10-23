@@ -79,8 +79,8 @@ Projekt: `deklaracja-dostepnosci.html`, zgodny ze strukturą Ministerstwa Cyfryz
 
 Do uzupełnienia (pola na żółto):
 - daty: publikacji strony dla wszystkich, ostatniej istotnej aktualizacji, sporządzenia deklaracji (format RRRR-MM-DD),
-- osoba kontaktowa i telefon; **adres e-mail do potwierdzenia** – w deklaracji serwisu awf.edu.pl adres zapisano jako „pełnomocnik.ozn@awf.edu.pl” (z literą „ł”), co prawdopodobnie jest błędem; w projekcie wpisano „pelnomocnik.ozn@awf.edu.pl”,
-- kod pocztowy do skarg – w deklaracji awf.edu.pl występują dwa różne: 00-968 i 01-986,
+- osoba kontaktowa i telefon (adres e-mail pelnomocnik.ozn@awf.edu.pl i kod pocztowy 00-968 potwierdzone 2026-10-24;
+  uwaga: w deklaracji serwisu awf.edu.pl adres jest zapisany z literą „ł”, a kod do skarg jako 01-986 – do poprawienia tam),
 - dostępność architektoniczna obiektów sportowych do wynajęcia (wejścia, szatnie, trybuny, pętle indukcyjne),
 - wstęp z psem asystującym (obowiązkowy element; brak go w deklaracji awf.edu.pl),
 - tłumacz PJM online (czy jest możliwy).
