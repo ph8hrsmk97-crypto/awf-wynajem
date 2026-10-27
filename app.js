@@ -636,6 +636,7 @@
     $('#srcBase').textContent = t('srcBase', { x: PRICING_SOURCE.base });
     $('#srcChange').textContent = t('srcChange', { x: PRICING_SOURCE.change });
     $('#bipLink').href = PRICING_SOURCE.bipUrl;
+    $('#a11yHref').href = lang === 'en' ? 'deklaracja-dostepnosci-en.html' : 'deklaracja-dostepnosci.html';
     $('#fact-fac').textContent = FACILITIES.length;
     $('#fact-rooms').textContent = ROOMS.filter(r => r.building !== 'Pozostałe' && !r.day).length + 4;
   }

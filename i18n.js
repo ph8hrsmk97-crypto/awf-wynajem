@@ -148,7 +148,7 @@ const UI = {
     footAddr: '<strong>Józef Piłsudski University of Physical Education in Warsaw</strong>, ul. Marymoncka 34, 00-968 Warszawa, Poland',
     srcBase: 'Price list basis: {x}', srcChange: 'Amended by: {x}. All calculator prices are net.',
     par2: 'Section 2 of the order: in individual cases, with the Chancellor’s consent, fees may be higher or lower than the price list.',
-    bipLink: 'Chancellor’s orders (Public Information Bulletin, Polish)', planLink: 'Campus map (PDF)', a11yLink: 'Accessibility statement (Polish)',
+    bipLink: 'Chancellor’s orders (Public Information Bulletin, Polish)', planLink: 'Campus map (PDF)', a11yLink: 'Accessibility statement',
     skip: 'Skip to content', photoN: 'Photo {i} of {n}',
     close: 'Close',
     detailPrices: '{p} · net prices', nightRate: '22:00–6:00: {n}% of the hourly rate', setupRate: 'set-up day: ½ of the 12 h rate',

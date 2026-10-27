@@ -74,11 +74,13 @@ Pliki `.md` to dokumentacja i nie muszą trafić na serwer.
 
 ## Deklaracja dostępności – co uzupełnić (koordynator ds. dostępności)
 
-Projekt: `deklaracja-dostepnosci.html`, zgodny ze strukturą Ministerstwa Cyfryzacji
-(„Warunki techniczne publikacji oraz struktura dokumentu elektronicznego Deklaracji Dostępności” – obowiązkowe formuły i identyfikatory `a11y-*`).
+Projekt: `deklaracja-dostepnosci.html` (PL) i `deklaracja-dostepnosci-en.html` (EN) – przebudowane 2026-10-27 po uwagach pełnomocnik ds. dostępności
+według aktualnego przykładu MC: https://www.gov.pl/web/dostepnosc-cyfrowa/deklaracja-dostepnosci-przyklad (formuły, nazwy sekcji, daty słownie).
+Mapa kampusu: wyłączenie na podstawie art. 3 ust. 2 pkt 4 ustawy (t.j. Dz.U. 2023 poz. 1440), informacje z mapy podane tekstem.
 
 Do uzupełnienia (pola na żółto):
-- daty: publikacji strony dla wszystkich, ostatniej istotnej aktualizacji, sporządzenia deklaracji (format RRRR-MM-DD),
+- daty: publikacji strony dla wszystkich, ostatniej istotnej aktualizacji, sporządzenia i przeglądu deklaracji (format: dzień miesiąc słownie rok, np. 15 listopada 2026 r.),
+- termin uzupełnienia opisów zdjęć (sekcja „Plany likwidacji błędów”),
 - osoba kontaktowa i telefon (adres e-mail pelnomocnik.ozn@awf.edu.pl i kod pocztowy 00-968 potwierdzone 2026-10-24;
   uwaga: w deklaracji serwisu awf.edu.pl adres jest zapisany z literą „ł”, a kod do skarg jako 01-986 – do poprawienia tam),
 - dostępność architektoniczna obiektów sportowych do wynajęcia (wejścia, szatnie, trybuny, pętle indukcyjne),
