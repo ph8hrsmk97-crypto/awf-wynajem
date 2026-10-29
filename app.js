@@ -447,7 +447,10 @@
   const ui = { type: 'all', tag: null, q: '' };
   const allTags = [...new Set(FACILITIES.flatMap(f => f.tags))];
   function photo(f, i = 0) {
-    if (f.photos?.[i]) return `<img src="img/${f.photos[i]}" alt="${esc(d(f.name))}" loading="lazy">`;
+    if (f.photos?.[i]) {
+      const alt = PHOTO_ALT[f.photos[i]]?.[lang === 'en' ? 1 : 0] || d(f.name);
+      return `<img src="img/${f.photos[i]}" alt="${esc(alt)}" loading="lazy">`;
+    }
     return `<div class="nophoto"><span>${esc(d(f.short || f.name))}<small>${esc(d(f.place))} · ${t('noPhoto')}</small></span></div>`;
   }
   function fromPrice(f) {

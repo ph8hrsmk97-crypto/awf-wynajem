@@ -421,3 +421,33 @@ const CONTACTS = [
 
 
 const VAT_RATE = 0.23;
+
+/* Opisy alternatywne zdjęć (WCAG 1.1.1) – [polski, angielski]. Opisują, co widać na zdjęciu.
+ * Nowe zdjęcie = nowy wpis tutaj; bez wpisu strona użyje samej nazwy obiektu. */
+const PHOTO_ALT = {
+  'stadion-la.jpg': ['Stadion lekkoatletyczny z czerwoną bieżnią i murawą, na pierwszym planie kolorowe krzesełka na trybunie, w tle maszty oświetleniowe', 'Athletics stadium with a red running track and grass field, colourful stadium seats in the foreground, floodlight masts in the background'],
+  'stadion-la-2.jpg': ['Zeskok do skoku o tyczce ze stojakami przy czerwonej bieżni, w tle zadaszona trybuna stadionu', 'Pole vault landing mat and uprights next to the red track, covered grandstand in the background'],
+  'hala-la.jpg': ['Wnętrze hali lekkoatletycznej: boisko do siatkówki w kolorze turkusowym i czerwonym otoczone bieżnią, w tle trybuny', 'Indoor athletics hall: turquoise and red volleyball court surrounded by a running track, stands in the background'],
+  'hala-la-2.jpg': ['Prosta niebieska bieżnia z torami w hali lekkoatletycznej, wzdłuż ściany okna i kolumny', 'Straight blue indoor running track with lanes, windows and columns along the wall'],
+  'plywalnia.jpg': ['Basen sportowy z torami rozdzielonymi linami, pływacy w wodzie, w tle trybuny i okrągłe okna', 'Sports swimming pool with lane ropes and swimmers, stands and round windows in the background'],
+  'plywalnia-2.jpg': ['Widok na tory basenu od strony słupków startowych, pływak skacze do wody', 'View of the pool lanes from the starting blocks, a swimmer diving in'],
+  'hala-gier.jpg': ['Hala Gier widziana z góry: parkietowe boisko z liniami do koszykówki i piłki ręcznej, na pierwszym planie kosz', 'Games Hall seen from above: wooden court with basketball and handball lines, a basketball hoop in the foreground'],
+  'hala-gier-2.jpg': ['Parkietowe boisko Hali Gier, w tle trybuny i przeszklona ściana', 'Wooden court of the Games Hall, stands and a glass wall in the background'],
+  'sg-1.jpg': ['Jasna sala gimnastyczna z parkietem w liniach boisk, koszem do koszykówki i ławkami pod ścianą', 'Bright gymnasium with a wooden floor marked for team sports, a basketball hoop and benches along the wall'],
+  'sg-3.jpg': ['Sala gimnastyczna wyłożona czerwonymi i niebieskimi matami, przy ścianie drabinki i sprzęt gimnastyczny', 'Gymnasium covered with red and blue mats, wall bars and gymnastics equipment along the wall'],
+  'sg-4.jpg': ['Sala gimnastyczna z niebiesko-pomarańczową nawierzchnią w liniach boisk, kosze do koszykówki i drabinki', 'Gymnasium with a blue and orange court floor, basketball hoops and wall bars'],
+  'sg-5.jpg': ['Duża hala gimnastyczna z polem do ćwiczeń wolnych, równoważniami, materacami i przyrządami gimnastycznymi', 'Large gymnastics hall with a floor exercise area, balance beams, mats and gymnastics apparatus'],
+  'judo.jpg': ['Sala z matami do judo i zapasów: niebieskie i żółte maty, koło zapaśnicze, na ścianie napisy JUDO i ZAPASY', 'Judo and wrestling hall: blue and yellow mats, a wrestling circle, JUDO and ZAPASY signs on the wall'],
+  'szermierka.jpg': ['Duża sala szermierki z ciemną podłogą wyznaczoną liniami plansz, drewniany strop i drabinki przy ścianie', 'Large fencing hall with a dark floor marked with pistes, a wooden ceiling and wall bars'],
+  'b18-silownia.jpg': ['Siłownia z ławkami i sztangami, maszyny do ćwiczeń, duże przeszklone okna', 'Gym with benches and barbells, exercise machines and large windows'],
+  'b18-sala-c.jpg': ['Sala do szermierki na wózkach widziana z antresoli: plansze na podłodze, sportowe wózki i sprzęt szermierczy', 'Wheelchair fencing hall seen from the mezzanine: pistes on the floor, sports wheelchairs and fencing equipment'],
+  'b19-sala-a.jpg': ['Sala do taekwondo z czerwonymi i niebieskimi matami, na ścianie baner AZS AWF Warszawa', 'Taekwondo hall with red and blue mats, an AZS AWF Warszawa banner on the wall'],
+  'b19-sala-b.jpg': ['Pusta sala z drewnianym parkietem i dużymi oknami, przeznaczona do fitnessu i tańca', 'Empty hall with a wooden floor and large windows, used for fitness and dance'],
+  'rugby.jpg': ['Żużlowa bieżnia okrążająca trawiaste boisko, wzdłuż bieżni drzewa', 'Cinder running track around a grass pitch, lined with trees'],
+  'boisko-3.jpg': ['Boisko piłkarskie ze sztuczną trawą, bramki, maszt oświetleniowy, ogrodzenie i chodnik wzdłuż boiska', 'Artificial grass football pitch with goals, a floodlight mast, a fence and a path alongside'],
+  'boisko-4.jpg': ['Trawiaste boisko piłkarskie z bramką i chorągiewką narożną, w tle drzewa i trybuna', 'Grass football pitch with a goal and a corner flag, trees and a stand in the background'],
+  'boisko-5.jpg': ['Trawiaste boisko piłkarskie, na którym trenuje grupa zawodniczek, w tle bramki i drzewa', 'Grass football pitch with a group of players training, goals and trees in the background'],
+  'boisko-6.jpg': ['Trawiaste boisko piłkarskie z bramką, otoczone drzewami', 'Grass football pitch with a goal, surrounded by trees'],
+  'poligon.jpg': ['Rozległy trawiasty teren poligonu lekkoatletycznego otoczony drzewami', 'Large grassy athletics training ground surrounded by trees'],
+  'plazowka.jpg': ['Piaszczyste boisko do siatkówki plażowej ze słupkami, otoczone krzewami i drzewami', 'Sandy beach volleyball court with posts, surrounded by bushes and trees']
+};

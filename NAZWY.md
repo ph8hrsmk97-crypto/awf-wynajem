@@ -60,3 +60,9 @@ Na stronie www nie ma dziś listy sal. W cenniku używane są skróty, które kl
 | Szatnia przy SG 1 / Szatnia pod SG 4 | Szatnia przy Sali gimnastycznej nr 1 (SG 1) / pod SG 4 |
 | Nagłosnienie, Możliowść, Możliwść, Infrastruktu ra, powierzchn | literówki do poprawienia |
 | Parking F, E, D… | dodać plan parkingów z oznaczeniami na stronie |
+
+## Zdjęcia na awf.edu.pl
+
+| Plik na awf.edu.pl | Opis na stronie | Co faktycznie pokazuje |
+|---|---|---|
+| Sala-C-1.jpg (Pawilon 42) | Sala C – siłownia | szermierkę na wózkach (plansze, wózki sportowe) – raczej Sala D; do sprawdzenia |
