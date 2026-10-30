@@ -83,7 +83,7 @@ Do uzupełnienia (pola na żółto):
 - termin uzupełnienia opisów zdjęć (sekcja „Plany likwidacji błędów”),
 - osoba kontaktowa i telefon (adres e-mail pelnomocnik.ozn@awf.edu.pl i kod pocztowy 00-968 potwierdzone 2026-10-24;
   uwaga: w deklaracji serwisu awf.edu.pl adres jest zapisany z literą „ł”, a kod do skarg jako 01-986 – do poprawienia tam),
-- dostępność architektoniczna obiektów sportowych do wynajęcia (wejścia, szatnie, trybuny, pętle indukcyjne),
+- ~~dostępność architektoniczna obiektów sportowych do wynajęcia~~ – uzupełniona 2026-10-30 na podstawie ankiety kierownik obiektów sportowych,
 - wstęp z psem asystującym (obowiązkowy element; brak go w deklaracji awf.edu.pl),
 - tłumacz PJM online (czy jest możliwy).
 
