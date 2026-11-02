@@ -15,6 +15,10 @@
 
 ## Uwagi do konfiguracji serwera (z testu 2026-10-23)
 
+- **Po każdym wgraniu plików: wyczyścić cache Cloudflare** (Caching → Purge Cache). Cloudflare trzyma pliki JS do 4 h; nowy `app.js` ze starym `data.js` może zepsuć stronę.
+- Ukrywanie adresów e-mail (Scrape Shield → Email Address Obfuscation) – wyłączone 2026-11-02, adresy w deklaracji muszą być czytelne bez JavaScriptu.
+- Domeny Google Fonts usunięte z CSP 2026-11-02.
+
 - Cloudflare dokleja do strony skrypt wykrywania botów (`/cdn-cgi/challenge-platform/…`), który blokuje CSP – w konsoli przeglądarki jest błąd.
   Strona działa; można wyłączyć tę funkcję dla subdomeny albo zostawić.
 - CSP nadal dopuszcza `fonts.googleapis.com` i `fonts.gstatic.com` – można je usunąć, czcionki są lokalne.
