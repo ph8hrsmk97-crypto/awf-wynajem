@@ -12,7 +12,7 @@ Pliki: `index.html`, `app.js`, `data.js`, `i18n.js`, `deklaracja-dostepnosci.htm
 - opisy obiektów: Hala Gier – budynek nr 1; SG 1 bez piłki ręcznej i futsalu; Hala LA z futsalem; usunięta Sala Tańca (bud. 4);
   judo i zapasy jako dwie sale; Pawilon 42 – sale A–D (A i B – sale tańca, bez sali E); poligon bez dostępu do wody,
 - usługi dodatkowe: bez szatni (są w cenie najmu), pozycja „Dodatkowe szatnie lub pomieszczenia – do ustalenia”,
-  bilet „One Shot” 25 zł i karta jednodniowa 100 zł (tylko przy najmie), nowe ceny: korektywa bud. 1 – 130 zł/h, stoły cateringowe – 40 zł,
+  bilet „One Shot” 25 zł i karta jednodniowa 100 zł (tylko przy najmie), nowe ceny: korektywa bud. 1 – 130 zł/h,
 - nowy cel „Promocja na terenie AWF” (bez najmu obiektu),
 - kilka obiektów w jednym zapytaniu („+ Dodaj kolejny obiekt do zapytania”),
 - formularz: przycisk „Wyślij zapytanie e-mailem” (mailto na wynajem@awf.edu.pl), kopiowanie jako zapas, informacja RODO pod formularzem.

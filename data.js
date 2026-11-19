@@ -371,7 +371,7 @@ const EXTRAS = [
   { id: 'krzesla', group: 'gear', label: 'Krzesła standard (drewniane)', price: 6, unit: 'zł/szt./dzień', per: 'day', qtyLabel: 'szt.', max: 100 },
   { id: 'krzesla-iso', group: 'gear', label: 'Krzesła tapicerowane (ISO)', price: 12, unit: 'zł/szt./dzień', per: 'day', qtyLabel: 'szt.', max: 160 },
   { id: 'lawy', group: 'gear', label: 'Ławy szkolne', price: 6, unit: 'zł/szt./dzień', per: 'day', qtyLabel: 'szt.', max: 50 },
-  { id: 'stoly', group: 'gear', label: 'Stoły cateringowe', price: 40, unit: 'zł/szt./dzień', per: 'day', qtyLabel: 'szt.', max: 20 },
+  { id: 'stoly', group: 'gear', label: 'Stoły cateringowe', price: 15, unit: 'zł/szt./dzień', per: 'day', qtyLabel: 'szt.', max: 20 },
   { id: 'podest', group: 'gear', label: 'Podest/scena, moduł 1 × 2 m', price: 25, unit: 'zł/szt./dzień', per: 'day', qtyLabel: 'szt.', max: 16 },
 
   { id: 'p-b', group: 'parking', label: 'Parking B – 90 miejsc', price: 2750, unit: 'zł/dzień', per: 'day', flag: true },
