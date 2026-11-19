@@ -4,6 +4,19 @@
 > Repozytorium zawiera już wersję produkcyjną: lokalne czcionki (`fonts/`), `concept: false`, bez blokady indeksowania,
 > z poprawionymi zakresami `unicode-range` oraz nowymi plikami poniżej. Wystarczy podmienić pliki na serwerze.
 
+## Zmiany z 2026-11-19 (uwagi pracownic AWF) – do podmiany na serwerze
+
+Pliki: `index.html`, `app.js`, `data.js`, `i18n.js`, `deklaracja-dostepnosci.html`, `deklaracja-dostepnosci-en.html`. Katalogi `img/` i `fonts/` bez zmian.
+**Po wgraniu wyczyścić cache Cloudflare** (nowy `app.js` nie działa ze starym `data.js` i `i18n.js`).
+
+- opisy obiektów: Hala Gier – budynek nr 1; SG 1 bez piłki ręcznej i futsalu; Hala LA z futsalem; usunięta Sala Tańca (bud. 4);
+  judo i zapasy jako dwie sale; Pawilon 42 – sale A–D (A i B – sale tańca, bez sali E); poligon bez dostępu do wody,
+- usługi dodatkowe: bez szatni (są w cenie najmu), pozycja „Dodatkowe szatnie lub pomieszczenia – do ustalenia”,
+  bilet „One Shot” 25 zł i karta jednodniowa 100 zł (tylko przy najmie), nowe ceny: korektywa bud. 1 – 130 zł/h, stoły cateringowe – 40 zł,
+- nowy cel „Promocja na terenie AWF” (bez najmu obiektu),
+- kilka obiektów w jednym zapytaniu („+ Dodaj kolejny obiekt do zapytania”),
+- formularz: przycisk „Wyślij zapytanie e-mailem” (mailto na wynajem@awf.edu.pl), kopiowanie jako zapas, informacja RODO pod formularzem.
+
 ## Zmiany od pierwszego wdrożenia (do podmiany na serwerze)
 
 - `index.html` – poprawione `unicode-range` w 5 blokach `@font-face` (było `U+20AD-C0` / `U+20AD-C4`),
@@ -58,7 +71,8 @@ Pliki `.md` to dokumentacja i nie muszą trafić na serwer.
   Na stronie i w treści każdego zapytania jest teraz zastrzeżenie: wyliczenie ma charakter informacyjny,
   nie stanowi oferty w rozumieniu art. 66 k.c., a wiążącą cenę podaje Dział Obiektów po weryfikacji.
   Dział Obiektów zawsze przelicza cenę według cennika, a kwota z zapytania służy tylko orientacyjnie.
-- **Formularz** nie wysyła danych na żaden serwer. Tworzy treść zapytania do skopiowania albo otwiera program pocztowy (mailto).
+- **Formularz** nie wysyła danych na żaden serwer. Tworzy treść zapytania i przyciskiem „Wyślij zapytanie e-mailem” otwiera program pocztowy (mailto) z gotową wiadomością; zapasowo – kopiowanie treści.
+  Pod formularzem jest krótka informacja o przetwarzaniu danych (RODO) – treść do akceptacji IOD (2026-11-19).
   Strona nie zbiera więc danych osobowych.
   Jeśli w przyszłości formularz ma wysyłać dane bezpośrednio, potrzebne będą: skrypt po stronie serwera,
   klauzula informacyjna RODO, zabezpieczenie przed spamem i ponowne przeliczenie ceny na serwerze.
@@ -73,7 +87,9 @@ Pliki `.md` to dokumentacja i nie muszą trafić na serwer.
 | 4 | Treningi → Pływalnia → Tor basenu, 3 tory → Jednorazowo, 2 h | 137 × 2 × 3 = **822,00 zł** |
 | 5 | Wydarzenie komercyjne → Poligon → do 1000 osób, 2 dni, 1 dzień montażu | 13 500 × 2 + 6 750 = **33 750,00 zł** |
 | 6 | Szkolenie → Budynek nr 25 → Pakiet dwóch sal → Najem na cały dzień, 2 dni | 1 680 × 2 = **3 360,00 zł** |
-| 7 | Formularz zapytania: wypełnić pola, „Przygotuj treść zapytania” | treść z terminami, kosztorysem i zastrzeżeniem; działa kopiowanie i otwieranie poczty |
+| 7 | Formularz zapytania: wypełnić pola, „Przygotuj zapytanie do wysłania” | treść z terminami, kosztorysem i zastrzeżeniem; „Wyślij zapytanie e-mailem” otwiera wiadomość na wynajem@awf.edu.pl; działa kopiowanie |
+| 7a | Treningi → Sala judo lub sala zapasów → „+ Dodaj kolejny obiekt do zapytania” → Hala Gier → „Wypełnij zapytanie” | treść z dwiema pozycjami, kwotą każdej pozycji i sumą |
+| 7b | Cel „Promocja na terenie AWF” → 1 dzień → stoisko promocyjne | bez wyboru obiektu; **300,00 zł** |
 | 8 | Przełącznik EN | wszystkie teksty, nazwy obiektów i treść zapytania po angielsku |
 
 ## Deklaracja dostępności – co uzupełnić (koordynator ds. dostępności)

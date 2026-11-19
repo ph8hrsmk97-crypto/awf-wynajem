@@ -15,20 +15,20 @@ Kolumna „Nazwa wspólna” jest już użyta w projekcie strony (`data.js`).
 | Hala lekkoatletyczna – sektory I–IV | nr 1 | Sektor nr 1, nr 2, nr 3, nr 4 | Sektor I, II, III, IV | wybrać jeden zapis (proponuję rzymskie, jak w cenniku) |
 | Siłownia przy Hali LA | nr 1 | brak | Siłownia przy Hali LA | dodać na www |
 | Pływalnia | nr 1 | Pływalnia | Pływalnia | zgodne; na www dodać nr budynku |
-| Hala Gier | **brak danych** | Hala Gier | Hala Gier | uzupełnić numer budynku |
+| Hala Gier | nr 1 | Hala Gier | Hala Gier | na stronie wynajmu: budynek nr 1 (2026-11-19) |
 | Sala gimnastyczna nr 1 (SG 1) | nr 1 | Sala gimnastyczna nr 1 | SG.1 (Budynek nr 1) | na www dopisać skrót SG 1 i budynek; w cenniku pełną nazwę |
 | Sala gimnastyczna nr 3 (SG 3) | nr 20 | Sala gimnastyczna nr 3 | SG.3 (Budynek nr 20) | jw. |
 | Sala gimnastyczna nr 4 (SG 4) | nr 1 | Sala gimnastyczna nr 4 | SG.4 (Budynek nr 1) | jw. |
 | Sala gimnastyczna nr 5 (SG 5) | nr 23 | Sala gimnastyczna nr 5 | SG.5 (Budynek nr 23) | jw. |
 | Sala gimnastyczna nr 5 – sala mała | nr 23 | brak | SG.5 – Sala mała | dodać na www |
-| Sala Tańca | nr 4 | brak | Sala Tańca | dodać na www (opis, zdjęcia) |
-| Sala judo i zapasów | nr 22 (Pawilon Sportów Walki) | Sala z matami | „Judo” i „Zapasy” jako dwie pozycje; komercyjnie „JUDO i ZAPASY” | **wyjaśnić: jedna sala czy dwie?** Jeśli jedna – jedna pozycja w cenniku |
+| Sala Tańca | nr 4 | brak | Sala Tańca | **usunięta ze strony wynajmu** (2026-11-19 – wprowadzała w błąd) |
+| Sala judo, sala zapasów (dwie sale) | nr 22 (Pawilon Sportów Walki) | Sala z matami | „Judo” i „Zapasy” jako dwie pozycje; komercyjnie „JUDO i ZAPASY” | **wyjaśnić: jedna sala czy dwie?** Jeśli jedna – jedna pozycja w cenniku |
 | Sala szermierki | nr 22 | Sala szermierki | Szermierka | ujednolicić na „Sala szermierki” |
 | Sala treningowa dolna (szermierka) | nr 22 | brak | Sala Treningowa Dolna (sport.) / SZERMIERKA dolna (komerc.) | jedna nazwa w obu załącznikach; dodać na www |
-| Pawilon 42 – sala A, B (sporty walki) | nr 18 | brak | Sala A, Sala B – sporty walki | dodać na www |
+| Pawilon 42 – sala A, B (sale tańca) | nr 18 | brak | Sala A, Sala B – sporty walki | na stronie wynajmu: sale tańca (2026-11-19); poprawić opis w cenniku |
 | Pawilon 42 – sala C (siłownia) | nr 18 | Sala C – siłownia | Sala C siłownia | zgodne |
 | Pawilon 42 – sala D (szermierka na wózkach) | nr 18 | Sala D – szermierka na wózkach | Sala D szermierka na wózkach | zgodne |
-| Pawilon 42 – sala E (fitness, joga) | nr 18 | Sala E – joga, relaksacja | Sala E (poziom -1: fitness / joga) | zgodne co do treści; dopisać „poziom -1” na www |
+| Pawilon 42 – sala E (fitness, joga) | nr 18 | Sala E – joga, relaksacja | Sala E (poziom -1: fitness / joga) | **usunięta ze strony wynajmu** (2026-11-19 – czasowo wydzierżawiona) |
 | Pawilon 43 – sala A (taekwondo) | nr 19 | **Sala A – taekwondo** | **Sala A (fitness)** | **sprzeczność – sprawdzić, która sala jest która**; cena jednakowa (132 zł), więc wpływ tylko na opis |
 | Pawilon 43 – sala B (fitness, taniec) | nr 19 | **Sala B – fitness, taniec** | **Sala B (sporty walki – taekwondo)** | jw. |
 | Sale do korektywy | nr 1 i nr 20 (sala 63) | brak | Sala do korektywy; Sala nr 63 | dodać na www |

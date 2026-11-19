@@ -293,6 +293,14 @@ details.ex summary .n { color: var(--muted); font-weight: 400; font-size: 14px; 
 .totals .grand b { font: 700 38px/1 var(--font-display); }
 .receipt .rf { padding: 12px 20px 20px; display: grid; gap: 10px; }
 .receipt .rf p { margin: 0; font-size: 12.5px; color: var(--muted); }
+.basket { border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; font-size: 14px; }
+.basket ul { list-style: none; margin: 6px 0 0; padding: 0; }
+.basket li { display: grid; grid-template-columns: minmax(0, 1fr) auto auto; gap: 8px; align-items: center; padding: 6px 0; border-bottom: 1px dashed var(--line); }
+.basket li small { display: block; color: var(--muted); font-size: 12.5px; }
+.basket .amt, .basket .btot { font-variant-numeric: tabular-nums; white-space: nowrap; }
+.basket .x { border: 0; background: none; color: var(--muted); font-size: 20px; line-height: 1; cursor: pointer; padding: 4px 6px; }
+.basket .btot { display: flex; justify-content: space-between; font-weight: 700; margin-top: 8px; }
+.basket .note { margin-top: 6px; }
 .toggle { display: flex; align-items: center; gap: 8px; font-size: 14px; cursor: pointer; }
 .toggle input { accent-color: var(--green); width: 18px; height: 18px; }
 
@@ -485,7 +493,7 @@ footer p { margin: 0 0 6px; }
                   <input id="minCap" type="number" min="0" step="5" value="0" inputmode="numeric">
                 </label>
               </div>
-              <label class="field" style="margin-top:10px"><span data-i18n="facility"></span>
+              <label class="field" id="facilityField" style="margin-top:10px"><span data-i18n="facility"></span>
                 <select id="facility"></select>
               </label>
               <div class="options" id="options" role="radiogroup"></div>
@@ -527,7 +535,9 @@ footer p { margin: 0 0 6px; }
           </div>
           <div class="rf">
             <p id="indivNote" hidden data-i18n="indivNote"></p>
+            <div id="basket"></div>
             <button class="btn" type="button" id="askBtn" data-i18n="askBtn"></button>
+            <button class="btn ghost small" type="button" id="addBtn" data-i18n="addBtn"></button>
             <p data-i18n="rFoot"></p>
             <p data-i18n="disclaimer"></p>
           </div>
@@ -599,7 +609,7 @@ footer p { margin: 0 0 6px; }
     <button class="x" type="button" data-close data-i18n-aria="close">×</button>
   </div>
   <form class="dlg-b" id="askForm">
-    <p class="lead" data-i18n="askLead"></p>
+    <p class="lead" id="askLead"></p>
     <div class="row">
       <label class="field"><span data-i18n="aName"></span><input id="aName" type="text" required autocomplete="organization"></label>
       <label class="field"><span data-i18n="aPerson"></span><input id="aPerson" type="text" required autocomplete="name"></label>
@@ -610,14 +620,17 @@ footer p { margin: 0 0 6px; }
       <label class="field"><span><span data-i18n="aNip"></span> <small data-i18n="aOptional"></small></span><input id="aNip" type="text" inputmode="numeric"></label>
     </div>
     <label class="field"><span data-i18n="aNotes"></span><textarea id="aNotes" data-i18n-ph="aNotesPh"></textarea></label>
+    <p class="note" data-i18n="aRodo"></p>
     <button class="btn" type="submit" data-i18n="aSubmit"></button>
     <div id="askOut" hidden>
-      <pre class="out" id="askText"></pre>
-      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px">
-        <button class="btn small" type="button" id="copyBtn" data-i18n="aCopy"></button>
-        <a class="btn small ghost" id="mailBtn" href="#" data-i18n="aMail"></a>
+      <p class="lead" data-i18n="aReady" style="margin-top:14px"></p>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin:10px 0">
+        <a class="btn" id="mailBtn" href="#" data-i18n="aMail"></a>
+        <button class="btn ghost" type="button" id="copyBtn" data-i18n="aCopy"></button>
       </div>
-      <p class="note" data-i18n="aAfter"></p>
+      <p class="note" id="askAfter"></p>
+      <p class="note warn" id="askLong" hidden data-i18n="aLong"></p>
+      <pre class="out" id="askText" style="margin-top:10px"></pre>
     </div>
   </form>
 </dialog>

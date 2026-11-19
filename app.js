@@ -75,7 +75,9 @@
   const capMin = c => c == null ? Infinity : typeof c === 'number' ? c : parseInt(String(c), 10);
   const capMax = c => typeof c === 'string' ? parseInt(c.split('–')[1], 10) : c;
 
+  const PROMO_NAME = 'Promocja na terenie AWF', PROMO_PLACE = 'Teren AWF';
   function currentOptions() {
+    if (state.purpose === 'promocja') return [{ id: 'p', purpose: 'promocja', kind: 'range', label: PROMO_NAME }];
     if (state.purpose === 'konferencja') {
       const r = roomById(state.facility);
       if (!r) return [];
@@ -89,8 +91,8 @@
   const currentOption = () => currentOptions().find(o => o.id === state.option) || currentOptions()[0];
   const facilitiesFor = p => FACILITIES.filter(f => f.options.some(o => o.purpose === p));
   const roomsFor = min => ROOMS.filter(r => r.cap == null || capMax(r.cap) >= min);
-  const currentName = () => state.purpose === 'konferencja' ? d(roomById(state.facility)?.name) : d(byId(state.facility)?.name);
-  const currentPlace = () => state.purpose === 'konferencja' ? d(roomById(state.facility)?.building) : d(byId(state.facility)?.place);
+  const currentName = () => state.purpose === 'promocja' ? d(PROMO_NAME) : state.purpose === 'konferencja' ? d(roomById(state.facility)?.name) : d(byId(state.facility)?.name);
+  const currentPlace = () => state.purpose === 'promocja' ? d(PROMO_PLACE) : state.purpose === 'konferencja' ? d(roomById(state.facility)?.building) : d(byId(state.facility)?.place);
 
   /* ---------- Harmonogram: z dat i godzin wylicza terminy oraz godziny ---------- */
   function dateRange(from, to) {
@@ -229,7 +231,13 @@
   function renderFacilitySelect() {
     const sel = $('#facility');
     $('#roomFilters').hidden = state.purpose !== 'konferencja';
-    if (state.purpose === 'konferencja') {
+    const promo = state.purpose === 'promocja';
+    $('#facilityField').hidden = promo; $('#options').hidden = promo;
+    if (promo) {
+      $('#objHint').textContent = t('s3HintPromo');
+      state.option = 'p';
+      return;
+    } else if (state.purpose === 'konferencja') {
       $('#objHint').textContent = t('s3HintRooms');
       const rooms = roomsFor(state.minCap);
       if (!rooms.some(r => r.id === state.facility)) state.facility = rooms[0]?.id;
@@ -296,7 +304,7 @@
         }
       }
     } else {
-      $('#timeHint').textContent = t({ block: 'hintBlock', tier: 'hintTier', day: 'hintDay' }[o.kind]);
+      $('#timeHint').textContent = t({ block: 'hintBlock', tier: 'hintTier', day: 'hintDay', range: 'hintPromo' }[o.kind]);
       h += `<div class="row">${dateField('evFrom', t('dateFrom'))}${dateField('evTo', t('dateTo'))}</div>`;
       if (o.kind === 'block') {
         h += `<div class="row" style="margin-top:12px">${timeField('bFrom', t('timeFrom'))}${timeField('bTo', t('timeTo'))}${o.setup ? stepper('setup', t('setupDays'), state.setup, t('setupHint')) : ''}</div>`;
@@ -333,10 +341,15 @@
 
   /* ---------- Krok 5 ---------- */
   function extrasAvailable() {
-    const own = state.purpose === 'konferencja' ? [] : (byId(state.facility)?.extras || []);
-    return EXTRAS.filter(e => e.group === 'own' ? own.includes(e.id) : state.purpose !== 'trening' || e.group === 'gear');
+    /* promocja: tylko pozycje promocyjne; przy najmie obiektu promocja nie jest osobno wyceniana (ustalana indywidualnie) */
+    if (state.purpose === 'promocja') return EXTRAS.filter(e => e.group === 'promo');
+    const hasFac = state.purpose !== 'konferencja';
+    const own = hasFac ? (byId(state.facility)?.extras || []) : [];
+    return EXTRAS.filter(e => e.group === 'promo' ? false
+      : e.group === 'own' ? own.includes(e.id) || (e.all && hasFac)
+      : e.any || state.purpose !== 'trening' || e.group === 'gear');
   }
-  const openGroups = new Set(['own']);
+  const openGroups = new Set(['own', 'promo']);
   function renderExtras() {
     const groups = {};
     extrasAvailable().forEach(e => (groups[e.group] ||= []).push(e));
@@ -352,6 +365,7 @@
             <span>${esc(d(e.label))}<span class="u">${e.price != null ? zl0(e.price) + ' ' : ''}${esc(unit)}${e.qtyLabel ? ` · ${t('qty')}: ${esc(d(e.qtyLabel))}` : ''}</span></span>${qty}</label>`;
         }).join('')}</div></details>`;
     }).join('') || `<p class="note">${t('noExtras')}</p>`;
+    if (state.purpose === 'zawody' || state.purpose === 'komercja') $('#extras').insertAdjacentHTML('beforeend', `<p class="note">${t('promoIncluded')}</p>`);
   }
 
   /* ---------- Kosztorys ---------- */
@@ -363,8 +377,50 @@
     const vat = round2(r.net * VAT_RATE);
     $('#tNet').textContent = zl(r.net); $('#tVat').textContent = zl(vat); $('#tGross').textContent = zl(r.net + vat);
     $('#indivNote').hidden = !r.indiv;
+    renderBasket();
     return r;
   }
+
+  /* ---------- Kilka obiektów w jednym zapytaniu ---------- */
+  const basket = [];
+  const clone = o => JSON.parse(JSON.stringify(o));
+  const sig = o => JSON.stringify(o);
+  /* Wykonuje fn na zapisanym stanie pozycji (żeby przeliczać ją w bieżącym języku), potem przywraca stan. */
+  function withState(snap, fn) {
+    const saved = clone(state);
+    Object.assign(state, clone(snap));
+    try { return fn(); } finally { Object.keys(state).forEach(k => delete state[k]); Object.assign(state, saved); }
+  }
+  const currentValid = () => !schedule().err && !!currentOption();
+  const currentInBasket = () => basket.some(b => sig(b) === sig(state));
+  /* Pozycje zapytania: lista + bieżące wyliczenie (jeśli poprawne i jeszcze nie dodane). */
+  const positions = () => [...basket.map(clone), ...(currentValid() && !currentInBasket() ? [clone(state)] : [])];
+  function renderBasket() {
+    const box = $('#basket');
+    if (!basket.length) { box.innerHTML = ''; return; }
+    const items = basket.map((b, i) => withState(b, () => {
+      const o = currentOption(), r = compute();
+      return `<li><span><b>${esc(currentName())}</b><small>${esc(state.purpose === 'promocja' ? '' : d(o?.label))}</small></span>
+        <span class="amt">${zl(r.net)}</span><button type="button" class="x" data-rm="${i}" aria-label="${t('bRemove')}: ${esc(currentName())}">×</button></li>`;
+    }));
+    const extra = currentValid() && !currentInBasket();
+    const all = positions().reduce((x, p) => x + withState(p, () => compute().net), 0);
+    box.innerHTML = `<div class="basket"><b>${t('bHead', { n: plural(basket.length + (extra ? 1 : 0), 'item') })}</b><ul>${items.join('')}</ul>
+      ${extra ? `<p class="note">${t('bPlusCurrent', { x: currentName() })}</p>` : ''}
+      <div class="btot"><span>${t('bTotal')}</span><span>${zl(round2(all))}</span></div></div>`;
+  }
+  $('#addBtn').addEventListener('click', () => {
+    if (!currentValid()) { $('#timeSummary').scrollIntoView({ block: 'center' }); return; }
+    if (currentInBasket()) { toast(t('bAlready')); return; }
+    basket.push(clone(state));
+    renderBasket();
+    toast(t('bAdded'));
+    $('#purposes').scrollIntoView({ block: 'center', behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+  });
+  $('#basket').addEventListener('click', e => {
+    const b = e.target.closest('[data-rm]'); if (!b) return;
+    basket.splice(+b.dataset.rm, 1); renderBasket();
+  });
   function renderCalc() { renderClients(); renderPurposes(); renderFacilitySelect(); renderOptions(); renderTime(); renderExtras(); renderReceipt(); }
   const refresh = () => { renderSummary(); renderReceipt(); };
 
@@ -584,36 +640,57 @@
     s.warns.forEach(w => L.push('! ' + w));
     return L;
   }
+  /* Opis jednej pozycji zapytania (na bieżącym stanie). */
+  function positionText(head) {
+    const r = compute(), o = currentOption(), L = [];
+    if (head) L.push(head);
+    L.push(`${t('qPurpose')}: ${d(PURPOSES[state.purpose].label)}`);
+    L.push(state.purpose === 'promocja' ? `${t('qVenue')}: ${currentName()}` : `${t('qVenue')}: ${currentName()} (${currentPlace()}) – ${d(o.label)}`);
+    L.push(`${t('qDates')}:`, ...describeSchedule(r.sch).map(x => '  ' + x));
+    L.push(t('qCost'));
+    r.lines.forEach(l => L.push(`- ${l.label}: ${l.amount == null ? t('indivShort') : zl(l.amount)} (${l.detail})`));
+    return { L, net: r.net };
+  }
   function inquiryText() {
-    const r = compute(), o = currentOption();
-    const vat = round2(r.net * VAT_RATE);
+    const pos = positions();
     const client = CLIENTS.find(c => c.id === state.client);
     const v = id => $('#' + id).value.trim();
-    const L = [t('qTitle', { x: `${currentName()} (${currentPlace()})` }), ''];
+    const many = pos.length > 1;
+    const L = [many ? t('qTitleN', { n: plural(pos.length, 'item') }) : t('qTitle', { x: `${currentName()} (${currentPlace()})` }), ''];
     L.push(`${t('qTenant')}: ${v('aName')} (${d(client.label)})`);
     L.push(`${t('qPerson')}: ${v('aPerson')}`);
     L.push(`${t('qContact')}: ${[v('aEmail'), v('aPhone')].filter(Boolean).join(', ')}`);
     if (v('aNip')) L.push(`${t('qNip')}: ${v('aNip')}`);
-    L.push(`${t('qPurpose')}: ${d(PURPOSES[state.purpose].label)}`);
-    L.push(`${t('qVenue')}: ${currentName()} – ${d(o.label)}`);
-    L.push('', `${t('qDates')}:`, ...describeSchedule(r.sch).map(x => '  ' + x));
-    L.push('', t('qCost'));
-    r.lines.forEach(l => L.push(`- ${l.label}: ${l.amount == null ? t('indivShort') : zl(l.amount)} (${l.detail})`));
-    L.push(t('qTotals', { n: zl(r.net), v: zl(vat), g: zl(r.net + vat) }));
+    let net = 0;
+    pos.forEach((p, i) => withState(p, () => {
+      const x = positionText(many ? `${i + 1}. ${currentName()}` : '');
+      L.push('', ...x.L);
+      if (many) L.push(t('qSub', { n: zl(x.net) }));
+      net += x.net;
+    }));
+    net = round2(net);
+    const vat = round2(net * VAT_RATE);
+    L.push('', t(many ? 'qTotalsAll' : 'qTotals', { n: zl(net), v: zl(vat), g: zl(net + vat) }));
     if (v('aNotes')) L.push('', t('qNotes'), v('aNotes'));
     L.push('', t('disclaimer'));
-    return L.join('\n');
+    return { text: L.join('\n'), many: pos.length };
   }
   $('#askBtn').addEventListener('click', () => {
-    if (schedule().err) { $('#timeSummary').scrollIntoView({ block: 'center' }); return; }
+    if (!positions().length) { $('#timeSummary').scrollIntoView({ block: 'center' }); return; }
     $('#askOut').hidden = true; $('#ask').showModal();
   });
   $('#askForm').addEventListener('submit', e => {
     e.preventDefault();
-    const txt = inquiryText();
-    $('#askText').textContent = txt;
-    $('#mailBtn').href = `mailto:${SITE.enquiryEmail}?subject=${encodeURIComponent(t('qSubject', { x: currentName() }))}&body=${encodeURIComponent(txt)}`;
+    const q = inquiryText();
+    $('#askText').textContent = q.text;
+    const subject = q.many > 1 ? t('qSubjectN', { n: plural(q.many, 'item') }) : t('qSubject', { x: currentName() });
+    const href = `mailto:${SITE.enquiryEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(q.text)}`;
+    $('#mailBtn').href = href;
+    /* Niektóre programy pocztowe (np. Outlook w Windows) ucinają bardzo długie odnośniki mailto. */
+    $('#askLong').hidden = href.length < 1800;
     $('#askOut').hidden = false;
+    $('#mailBtn').focus();
+    $('#askOut').scrollIntoView({ block: 'nearest' });
   });
   $('#copyBtn').addEventListener('click', () => {
     const txt = $('#askText').textContent;
@@ -636,6 +713,8 @@
     $$('[data-i18n-aria]').forEach(el => { el.setAttribute('aria-label', t(el.dataset.i18nAria)); });
     $$('[data-lang]').forEach(b => b.setAttribute('aria-pressed', b.dataset.lang === lang));
     $('#kontakt').innerHTML = CONTACTS.map(c => `<div class="contact"><b>${esc(c.name)}</b><div>${esc(c.email)}</div><div>tel. ${esc(c.phone)}</div><div class="muted">${t('contactRole')}</div></div>`).join('');
+    $('#askLead').textContent = t('askLead', { x: SITE.enquiryEmail });
+    $('#askAfter').textContent = t('aAfter', { x: SITE.enquiryEmail });
     $('#srcBase').textContent = t('srcBase', { x: PRICING_SOURCE.base });
     $('#srcChange').textContent = t('srcChange', { x: PRICING_SOURCE.change });
     $('#bipLink').href = PRICING_SOURCE.bipUrl;

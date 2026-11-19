@@ -30,7 +30,8 @@ const PURPOSES = {
   trening:    { label: 'Treningi i zajęcia', hint: 'Stawka godzinowa, regularne lub jednorazowe zajęcia' },
   zawody:     { label: 'Zawody sportowe', hint: 'Pakiet do 5 h lub do 12 h dziennie' },
   komercja:   { label: 'Wydarzenie komercyjne', hint: 'Eventy firmowe, pikniki, nagrania, pokazy' },
-  konferencja:{ label: 'Szkolenie lub konferencja', hint: 'Sale seminaryjne i wykładowe' }
+  konferencja:{ label: 'Szkolenie lub konferencja', hint: 'Sale seminaryjne i wykładowe' },
+  promocja:   { label: 'Promocja na terenie AWF', hint: 'Plakaty, banery, stoiska, degustacje – bez najmu obiektu' }
 };
 
 /* Rodzaj najemcy podpowiada cel najmu – cennik nie różnicuje cen według najemcy. */
@@ -40,7 +41,8 @@ const CLIENTS = [
   { id: 'grupa',       label: 'Grupa prywatna',           purpose: 'trening' },
   { id: 'organizator', label: 'Organizator zawodów',      purpose: 'zawody' },
   { id: 'firma',       label: 'Firma, agencja eventowa',  purpose: 'komercja' },
-  { id: 'szkolenie',   label: 'Organizator szkolenia',    purpose: 'konferencja' }
+  { id: 'szkolenie',   label: 'Organizator szkolenia',    purpose: 'konferencja' },
+  { id: 'promotor',    label: 'Firma – promocja na terenie AWF', purpose: 'promocja' }
 ];
 
 const URL_BASE = 'https://www.awf.edu.pl/obiekty/obiekty-sportowe/';
@@ -51,7 +53,7 @@ const FACILITIES = [
     area: 18000, seats: 2800, tags: ['Lekkoatletyka'],
     features: ['bieżnia tartanowa, 8 torów', 'sztuczne oświetlenie', 'trzy koła do rzutu dyskiem i młotem', 'zeskoki do skoku wzwyż i o tyczce', 'siatka ochronna koła do rzutów'],
     photos: ['stadion-la.jpg', 'stadion-la-2.jpg'], url: URL_BASE + 'stadion-lekkoatletyczny',
-    extras: ['jupitery', 'nagl-stadion', 'szatnia-la', 'podium', 'barierki'],
+    extras: ['jupitery', 'nagl-stadion', 'podium', 'barierki'],
     options: [
       { id: 'g10', purpose: 'trening', kind: 'hour', label: 'Grupa do 10 osób', rate: 165 },
       { id: 'g20', purpose: 'trening', kind: 'hour', label: 'Grupa do 20 osób', rate: 250 },
@@ -62,10 +64,10 @@ const FACILITIES = [
   },
   {
     id: 'hala-la', name: 'Hala lekkoatletyczna im. Janusza Kusocińskiego', short: 'Hala lekkoatletyczna', place: 'Budynek nr 1', type: 'indoor',
-    area: 3665, seats: 300, tags: ['Lekkoatletyka', 'Siatkówka', 'Piłka ręczna'],
+    area: 3665, seats: 300, tags: ['Lekkoatletyka', 'Siatkówka', 'Piłka ręczna', 'Futsal'],
     features: ['Sektor I – gry zespołowe, nawierzchnia syntetyczna', 'Sektor II – skok wzwyż, skok o tyczce, piłka ręczna', 'Sektor III – rzuty, nawierzchnia tartanowa', 'Sektor IV – bieżnia 5-torowa, 100 m'],
     photos: ['hala-la.jpg', 'hala-la-2.jpg'], url: URL_BASE + 'hala-lekkoatletyczna',
-    extras: ['szatnia-la', 'nagl-hala-la'],
+    extras: ['nagl-hala-la'],
     options: [
       { id: 's1', purpose: 'trening', kind: 'hour', label: 'Sektor I – boisko do siatkówki', rate: 180 },
       { id: 's10', purpose: 'trening', kind: 'hour', label: 'Sektor II, III lub IV – do 10 osób', rate: 165 },
@@ -80,7 +82,7 @@ const FACILITIES = [
   {
     id: 'silownia-la', name: 'Siłownia przy Hali LA', place: 'Budynek nr 1', type: 'indoor',
     capacity: 'do 24 osób', tags: ['Siłownia'], features: ['dla klubów sportowych, maks. 24 osoby'],
-    photos: [], url: URL_BASE + 'hala-lekkoatletyczna', extras: ['szatnia-la'],
+    photos: [], url: URL_BASE + 'hala-lekkoatletyczna', extras: [],
     options: [
       { id: 'klub', purpose: 'trening', kind: 'hour', label: 'Kluby sportowe (maks. 24 os.)', rate: 220 },
       { id: 'kom', purpose: 'komercja', kind: 'block', label: 'Wynajem komercyjny', p5: 2500, p12: 5000, night: 2 }
@@ -99,11 +101,11 @@ const FACILITIES = [
     ]
   },
   {
-    id: 'hala-gier', name: 'Hala Gier', place: 'Kampus Marymoncka 34', type: 'indoor',
+    id: 'hala-gier', name: 'Hala Gier', place: 'Budynek nr 1', type: 'indoor',
     area: 1400, seats: 1000, tags: ['Koszykówka', 'Piłka ręczna', 'Siatkówka', 'Futsal'],
     features: ['nawierzchnia z parkietu', 'trybuny na 1000 miejsc', 'pełnowymiarowe boisko do gier zespołowych'],
     photos: ['hala-gier.jpg', 'hala-gier-2.jpg'], url: URL_BASE + 'hala-gier',
-    extras: ['szatnia-hg', 'szatnia-pod-hg', 'hol-hg', 'nagl-hg'],
+    extras: ['hol-hg', 'nagl-hg'],
     options: [
       { id: 'tr', purpose: 'trening', kind: 'hour', label: 'Zajęcia sportowe', rate: 330 },
       { id: 'zaw', purpose: 'zawody', kind: 'block', label: 'Zawody sportowe', p5: 1540, p12: 3300, setup: true },
@@ -112,9 +114,9 @@ const FACILITIES = [
   },
   {
     id: 'sg1', name: 'Sala gimnastyczna nr 1 (SG 1)', place: 'Budynek nr 1', type: 'indoor',
-    area: 306.88, tags: ['Koszykówka', 'Piłka ręczna', 'Siatkówka', 'Futsal', 'Badminton'],
+    area: 306.88, tags: ['Koszykówka', 'Siatkówka', 'Badminton'],
     features: ['nawierzchnia z gumoleum', 'gry zespołowe i badminton'],
-    photos: ['sg-1.jpg'], url: URL_BASE + 'sale-gimnastyczne', extras: ['szatnia-sg1'],
+    photos: ['sg-1.jpg'], url: URL_BASE + 'sale-gimnastyczne', extras: [],
     options: [
       { id: 'tr', purpose: 'trening', kind: 'hour', label: 'Zajęcia sportowe', rate: 180 },
       { id: 'zaw', purpose: 'zawody', kind: 'block', label: 'Zawody sportowe', p5: 800, p12: 1600, setup: true },
@@ -135,7 +137,7 @@ const FACILITIES = [
     id: 'sg4', name: 'Sala gimnastyczna nr 4 (SG 4)', place: 'Budynek nr 1', type: 'indoor',
     area: 457, capacity: 'do 49 osób', tags: ['Koszykówka', 'Siatkówka', 'Futsal', 'Badminton', 'Tenis'],
     features: ['nawierzchnia z parkietu', 'gry zespołowe, badminton, tenis ziemny', 'maks. 49 osób'],
-    photos: ['sg-4.jpg'], url: URL_BASE + 'sale-gimnastyczne', extras: ['szatnia-sg4'],
+    photos: ['sg-4.jpg'], url: URL_BASE + 'sale-gimnastyczne', extras: [],
     options: [
       { id: 'tr', purpose: 'trening', kind: 'hour', label: 'Zajęcia sportowe (maks. 49 os.)', rate: 180 },
       { id: 'zaw', purpose: 'zawody', kind: 'block', label: 'Zawody sportowe', p5: 800, p12: 1600, setup: true },
@@ -154,23 +156,14 @@ const FACILITIES = [
     ]
   },
   {
-    id: 'taniec', name: 'Sala Tańca', place: 'Budynek nr 4', type: 'indoor',
-    tags: ['Fitness i taniec'], features: ['zajęcia taneczne i fitness'],
-    photos: [], url: null, extras: [],
-    options: [
-      { id: 'tr', purpose: 'trening', kind: 'hour', label: 'Zajęcia sportowe', rate: 275 },
-      { id: 'zaw', purpose: 'zawody', kind: 'block', label: 'Zawody sportowe', p5: 1320, p12: 2640, setup: true },
-      { id: 'kom', purpose: 'komercja', kind: 'block', label: 'Wynajem komercyjny', p5: 5000, p12: 10000, night: 1.5, setup: true }
-    ]
-  },
-  {
-    id: 'psw-maty', name: 'Sala judo i zapasów', short: 'Judo i zapasy', place: 'Budynek nr 22 · Pawilon Sportów Walki', type: 'indoor',
-    area: 609, tags: ['Judo', 'Zapasy'], features: ['powierzchnia matowa 609 m²', 'zapasy, judo'],
+    id: 'psw-maty', name: 'Sala judo lub sala zapasów', short: 'Judo lub zapasy', place: 'Budynek nr 22 · Pawilon Sportów Walki', type: 'indoor',
+    area: 609, tags: ['Judo', 'Zapasy'], features: ['dwie osobne sale z matami: judo i zapasy', 'cena dotyczy jednej sali', 'powierzchnia matowa 609 m²'],
     photos: ['judo.jpg'], url: URL_BASE + 'pawilon-sportow-walki', extras: [],
     options: [
-      { id: 'tr', purpose: 'trening', kind: 'hour', label: 'Zajęcia sportowe – judo lub zapasy', rate: 132 },
-      { id: 'zaw', purpose: 'zawody', kind: 'block', label: 'Zawody', p5: 575, p12: 1150, setup: true },
-      { id: 'kom', purpose: 'komercja', kind: 'block', label: 'Wynajem komercyjny', p5: 3000, p12: 6000, night: 1.5, setup: true }
+      { id: 'tr', purpose: 'trening', kind: 'hour', label: 'Sala judo', rate: 132 },
+      { id: 'tr-z', purpose: 'trening', kind: 'hour', label: 'Sala zapasów', rate: 132 },
+      { id: 'zaw', purpose: 'zawody', kind: 'block', label: 'Zawody – jedna sala (judo lub zapasy)', p5: 575, p12: 1150, setup: true },
+      { id: 'kom', purpose: 'komercja', kind: 'block', label: 'Wynajem komercyjny – jedna sala (judo lub zapasy)', p5: 3000, p12: 6000, night: 1.5, setup: true }
     ]
   },
   {
@@ -193,18 +186,16 @@ const FACILITIES = [
     ]
   },
   {
-    id: 'b18', name: 'Pawilon 42 – sale A–E', short: 'Pawilon 42', place: 'Budynek nr 18', type: 'indoor',
-    tags: ['Siłownia', 'Judo', 'Szermierka', 'Joga'],
-    features: ['Sala C – siłownia, 167 m²', 'Sala D – szermierka na wózkach, 243,6 m²', 'Sala E – joga, relaksacja, 46,8 m²', 'Sale A i B – sporty walki'],
+    id: 'b18', name: 'Pawilon 42 – sale A–D', short: 'Pawilon 42', place: 'Budynek nr 18', type: 'indoor',
+    tags: ['Fitness i taniec', 'Siłownia', 'Szermierka'],
+    features: ['Sale A i B – sale tańca', 'Sala C – siłownia, 167 m²', 'Sala D – szermierka na wózkach, 243,6 m²'],
     photos: ['b18-silownia.jpg', 'b18-sala-c.jpg'], url: URL_BASE + 'pawilon-42', extras: [],
     options: [
-      { id: 'a', purpose: 'trening', kind: 'hour', label: 'Sala A – sporty walki', rate: 132 },
-      { id: 'b', purpose: 'trening', kind: 'hour', label: 'Sala B – sporty walki', rate: 132 },
+      { id: 'a', purpose: 'trening', kind: 'hour', label: 'Sala A – sala tańca', rate: 132 },
+      { id: 'b', purpose: 'trening', kind: 'hour', label: 'Sala B – sala tańca', rate: 132 },
       { id: 'c', purpose: 'trening', kind: 'hour', label: 'Sala C – siłownia', rate: 220 },
       { id: 'd', purpose: 'trening', kind: 'hour', label: 'Sala D – szermierka na wózkach', rate: 132 },
-      { id: 'e', purpose: 'trening', kind: 'hour', label: 'Sala E – fitness, joga (po 16:00)', rate: 66 },
-      { id: 'kom', purpose: 'komercja', kind: 'block', label: 'Komercyjnie – sala A, B, C lub D', p5: 2500, p12: 6000, night: 1.5, setup: true },
-      { id: 'kom-e', purpose: 'komercja', kind: 'block', label: 'Komercyjnie – sala E', p5: 1100, p12: 2200, night: 1.5, setup: true }
+      { id: 'kom', purpose: 'komercja', kind: 'block', label: 'Komercyjnie – sala A, B, C lub D', p5: 2500, p12: 6000, night: 1.5, setup: true }
     ]
   },
   {
@@ -220,10 +211,10 @@ const FACILITIES = [
   },
   {
     id: 'korektywa', name: 'Sale do korektywy', place: 'Budynki nr 1 i 20', type: 'indoor',
-    tags: ['Gimnastyka'], features: ['sala do korektywy w budynku nr 1', 'sala nr 63 w budynku nr 20'],
+    tags: ['Gimnastyka'], features: ['sala do korektywy w budynku nr 1 – po remoncie', 'sala nr 63 w budynku nr 20'],
     photos: [], url: null, extras: [],
     options: [
-      { id: 'b1', purpose: 'trening', kind: 'hour', label: 'Sala do korektywy (bud. nr 1)', rate: 65 },
+      { id: 'b1', purpose: 'trening', kind: 'hour', label: 'Sala do korektywy (bud. nr 1, po remoncie)', rate: 130 },  /* 65 → 130 zł, decyzja Kanclerza 19.11.2026 */
       { id: 'b20', purpose: 'trening', kind: 'hour', label: 'Sala nr 63 (bud. nr 20)', rate: 50 }
     ]
   },
@@ -277,7 +268,7 @@ const FACILITIES = [
   {
     id: 'poligon', name: 'Poligon lekkoatletyczny (boisko nr 7)', short: 'Poligon lekkoatletyczny', place: 'Teren otwarty, ogrodzony', type: 'outdoor',
     area: 18700, tags: ['Lekkoatletyka', 'Pikniki i eventy'],
-    features: ['koła do rzutów i siatka ochronna', 'pikniki, pokazy, wystawy', 'dostęp do wody i prądu (60 kW)', 'teren ogrodzony'],
+    features: ['koła do rzutów i siatka ochronna', 'pikniki, pokazy, wystawy', 'dostęp do prądu (60 kW)', 'teren ogrodzony'],
     photos: ['poligon.jpg'], url: 'https://www.awf.edu.pl/obiekty/tereny-rekreacyjne/poligon-lekkoatletyczny',
     extras: ['prad-poligon', 'podium', 'barierki'],
     options: [
@@ -360,16 +351,14 @@ const ROOMS = [
 
 /* Usługi dodatkowe – zał. 4 do Zarządzenia nr 63/2025/2026.
  * per: 'day' – cena × ilość × liczba dni; 'once' – cena × ilość; 'hourday' – cena × godziny × liczba dni.
- * group: own – tylko przy obiektach, które wskazują to id w polu extras. */
+ * group: own – tylko przy obiektach, które wskazują to id w polu extras (all: true – przy każdym obiekcie sportowym).
+ * any: true – dostępne przy każdym najmie (także treningi i sale), ale nie bez najmu (bilety One Shot, karty jednodniowe – 19.11.2026).
+ * Szatnie przy obiektach są w cenie najmu, dlatego nie ma ich na liście (decyzja z 19.11.2026). */
 const EXTRAS = [
   { id: 'jupitery', group: 'own', label: 'Jupitery', price: 220, unit: 'zł/h', per: 'hourday', qtyLabel: 'h dziennie', max: 12 },
   { id: 'sauna', group: 'own', label: 'Sauna sucha (do 8 os.)', price: 150, unit: 'zł/h', per: 'hourday', qtyLabel: 'h dziennie', max: 12 },
-  { id: 'szatnia-la', group: 'own', label: 'Szatnia przy Hali LA', price: 2000, unit: 'zł do 12 h', per: 'day', flag: true },
-  { id: 'szatnia-hg', group: 'own', label: 'Szatnia przy Hali Gier (1 korytarz D/M)', price: 1000, unit: 'zł do 12 h', per: 'day', flag: true },
-  { id: 'szatnia-pod-hg', group: 'own', label: 'Szatnia pod Halą Gier', price: 1000, unit: 'zł do 12 h', per: 'day', flag: true },
+  { id: 'szatnie-inne', group: 'own', all: true, label: 'Dodatkowe szatnie lub pomieszczenia, np. dla ekipy filmowej', price: null, unit: 'do ustalenia z Działem Obiektów', flag: true },
   { id: 'hol-hg', group: 'own', label: 'Hol przy Hali Gier', price: 500, unit: 'zł do 12 h', per: 'day', flag: true },
-  { id: 'szatnia-sg4', group: 'own', label: 'Szatnia pod SG 4 (1 szatnia)', price: 500, unit: 'zł do 12 h', per: 'day', flag: true },
-  { id: 'szatnia-sg1', group: 'own', label: 'Szatnia przy SG 1', price: 500, unit: 'zł do 12 h', per: 'day', flag: true },
   { id: 'nagl-hg', group: 'own', label: 'Nagłośnienie Hali Gier z obsługą', price: null, unit: 'wycena indywidualna', flag: true },
   { id: 'nagl-hala-la', group: 'own', label: 'Nagłośnienie Hali LA z obsługą', price: null, unit: 'wycena indywidualna', flag: true },
   { id: 'nagl-stadion', group: 'own', label: 'Nagłośnienie Stadionu LA z obsługą', price: null, unit: 'wycena indywidualna', flag: true },
@@ -382,7 +371,7 @@ const EXTRAS = [
   { id: 'krzesla', group: 'gear', label: 'Krzesła standard (drewniane)', price: 6, unit: 'zł/szt./dzień', per: 'day', qtyLabel: 'szt.', max: 100 },
   { id: 'krzesla-iso', group: 'gear', label: 'Krzesła tapicerowane (ISO)', price: 12, unit: 'zł/szt./dzień', per: 'day', qtyLabel: 'szt.', max: 160 },
   { id: 'lawy', group: 'gear', label: 'Ławy szkolne', price: 6, unit: 'zł/szt./dzień', per: 'day', qtyLabel: 'szt.', max: 50 },
-  { id: 'stoly', group: 'gear', label: 'Stoły cateringowe', price: 15, unit: 'zł/szt./dzień', per: 'day', qtyLabel: 'szt.', max: 20 },
+  { id: 'stoly', group: 'gear', label: 'Stoły cateringowe', price: 40, unit: 'zł/szt./dzień', per: 'day', qtyLabel: 'szt.', max: 20 },
   { id: 'podest', group: 'gear', label: 'Podest/scena, moduł 1 × 2 m', price: 25, unit: 'zł/szt./dzień', per: 'day', qtyLabel: 'szt.', max: 16 },
 
   { id: 'p-b', group: 'parking', label: 'Parking B – 90 miejsc', price: 2750, unit: 'zł/dzień', per: 'day', flag: true },
@@ -396,6 +385,8 @@ const EXTRAS = [
   { id: 'p-f', group: 'parking', label: 'Parking F – 20 miejsc', price: 1650, unit: 'zł/dzień', per: 'day', flag: true },
   { id: 'p-c', group: 'parking', label: 'Parking C – 18 miejsc', price: 1100, unit: 'zł/dzień', per: 'day', flag: true },
   { id: 'p-j', group: 'parking', label: 'Parking J – 12 miejsc', price: 1100, unit: 'zł/dzień', per: 'day', flag: true },
+  { id: 'oneshot', group: 'parking', any: true, label: 'Bilet jednorazowy „One Shot” na wyjazd z terenu AWF', price: 25, unit: 'zł/szt.', per: 'once', qtyLabel: 'szt.', max: 500 },
+  { id: 'karta-dzien', group: 'parking', any: true, label: 'Karta jednodniowa na wjazd i wyjazd', price: 100, unit: 'zł/szt./dzień', per: 'day', qtyLabel: 'szt.', max: 200 },
   { id: 'p-szlaban', group: 'parking', label: 'Otwarcie szlabanu wyjazdowego (12 h)', price: 12000, unit: 'zł/12 h', per: 'day', flag: true },
 
   { id: 'plakat', group: 'promo', label: 'Plakaty A3 na terenie AWF', price: 25, unit: 'zł/szt./tydzień', per: 'once', qtyLabel: 'szt. × tyg.', max: 200 },
