@@ -311,6 +311,8 @@ dialog::backdrop { background: rgba(5,20,14,.6); }
 .dlg-b { padding: 16px 24px 24px; display: grid; gap: 14px; }
 .x { border: 0; background: var(--surface-2); color: var(--ink); width: 38px; height: 38px; border-radius: 999px; font-size: 20px; cursor: pointer; flex: none; }
 textarea { min-height: 90px; resize: vertical; }
+.hp { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
+.ask-msg.ok { color: var(--green); font-weight: 600; }
 pre.out { white-space: pre-wrap; background: var(--bg); border: 1px solid var(--line); border-radius: 8px; padding: 12px; font: 13px/1.5 ui-monospace, "SF Mono", Menlo, monospace; max-height: 260px; overflow: auto; margin: 0; }
 
 /* Szczegóły obiektu */
@@ -619,18 +621,22 @@ footer p { margin: 0 0 6px; }
       <label class="field"><span data-i18n="aPhone"></span><input id="aPhone" type="text" autocomplete="tel" inputmode="tel"></label>
       <label class="field"><span><span data-i18n="aNip"></span> <small data-i18n="aOptional"></small></span><input id="aNip" type="text" inputmode="numeric"></label>
     </div>
+    <label class="field" id="eventField" hidden><span data-i18n="aEvent"></span><select id="aEvent"></select></label>
+    <div class="hp" aria-hidden="true"><label>Strona www <input id="aWebsite" type="text" tabindex="-1" autocomplete="off"></label></div>
     <label class="field"><span data-i18n="aNotes"></span><textarea id="aNotes" data-i18n-ph="aNotesPh"></textarea></label>
     <p class="note" data-i18n="aRodo"></p>
-    <button class="btn" type="submit" data-i18n="aSubmit"></button>
+    <button class="btn" type="submit" id="sendBtn" data-i18n="aSubmit"></button>
     <div id="askOut" hidden>
-      <p class="lead" data-i18n="aReady" style="margin-top:14px"></p>
-      <div style="display:flex;gap:8px;flex-wrap:wrap;margin:10px 0">
-        <a class="btn" id="mailBtn" href="#" data-i18n="aMail"></a>
-        <button class="btn ghost" type="button" id="copyBtn" data-i18n="aCopy"></button>
+      <p class="lead ask-msg" id="askMsg" tabindex="-1" role="status" style="margin-top:14px"></p>
+      <div id="askFallback">
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin:10px 0">
+          <a class="btn" id="mailBtn" href="#" data-i18n="aMail"></a>
+        </div>
+        <p class="note" id="askAfter"></p>
+        <p class="note warn" id="askLong" hidden data-i18n="aLong"></p>
       </div>
-      <p class="note" id="askAfter"></p>
-      <p class="note warn" id="askLong" hidden data-i18n="aLong"></p>
-      <pre class="out" id="askText" style="margin-top:10px"></pre>
+      <div style="margin:10px 0"><button class="btn ghost small" type="button" id="copyBtn" data-i18n="aCopy"></button></div>
+      <pre class="out" id="askText"></pre>
     </div>
   </form>
 </dialog>

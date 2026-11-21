@@ -4,6 +4,35 @@
 > Repozytorium zawiera już wersję produkcyjną: lokalne czcionki (`fonts/`), `concept: false`, bez blokady indeksowania,
 > z poprawionymi zakresami `unicode-range` oraz nowymi plikami poniżej. Wystarczy podmienić pliki na serwerze.
 
+## Zmiany z 2026-11-21 – wysyłka zapytania prosto ze strony
+
+Pliki: `index.html`, `app.js`, `data.js`, `i18n.js` oraz **nowy** `zapytanie.php`. Po wgraniu wyczyścić cache Cloudflare.
+
+**Jak działa:** przycisk „Wyślij zapytanie” wysyła dane formularza (POST, JSON) do `zapytanie.php` w tym samym katalogu co strona.
+Skrypt wysyła jeden e-mail na `wynajem@awf.edu.pl` (nadawca: `wynajem@awf.edu.pl`, „Odpowiedz do”: adres klienta) i niczego nie zapisuje
+(poza skrótem adresu IP do limitu 5 zapytań na 10 minut). Jeśli wysyłka się nie uda, strona pokazuje zapasowy przycisk
+„Wyślij zapytanie e-mailem” (mailto) – strona działa więc także przed konfiguracją skryptu.
+
+**Do zrobienia przez IT:**
+1. Wgrać `zapytanie.php`; serwer musi obsługiwać PHP 7.4+ i wysyłkę funkcją `mail()` (sendmail/postfix albo przekaźnik SMTP Microsoft 365).
+   Inna technologia na serwerze → skrypt jest krótki, można go przepisać; ważne: stały adresat, walidacja pól, brak nowych linii w nagłówkach.
+2. Ustawić w skrypcie adres nadawcy (`FROM`) dozwolony dla serwera (SPF/DKIM `awf.edu.pl`), żeby poczta nie trafiała do spamu.
+3. Cloudflare: nie blokować zapytań POST do `/zapytanie.php` (wyzwanie „bot fight” zablokowałoby wysyłkę). CSP: `connect-src 'self'`, jeśli ustawione jest `default-src`.
+4. Test: wysłać zapytanie ze strony i sprawdzić, czy doszło na wynajem@ z oznaczeniem w temacie.
+
+**Reguły w skrzynce wynajem@awf.edu.pl** (temat zaczyna się od oznaczeń w nawiasach, np. `[PLYWALNIA]`; przy kilku obiektach – kilka oznaczeń):
+
+| Oznaczenie w temacie | Kiedy | Przekierować do |
+|---|---|---|
+| `[FILM]` | wydarzenie komercyjne – nagranie filmowe, reklama, sesja zdjęciowa | Kamila Andrzejczuk |
+| `[PROMOCJA]` | promocja na terenie AWF | Kamila Andrzejczuk |
+| `[PLYWALNIA]` | treningi i zawody na pływalni | Sylwia Ćwik |
+| `[PILKA]` | treningi na boiskach piłkarskich i Stadionie Rugby | Daniel Lewandowski |
+| `[PIKNIK]` | wydarzenie komercyjne – piknik, impreza plenerowa | Daniel Lewandowski |
+| `[EVENT]`, `[SALE]`, `[INNE]` | pozostałe wydarzenia, sale szkoleniowe, inne obiekty | zostają w wynajem@, przydział ręczny |
+
+Zmiana osoby lub podział „wg obłożenia” = zmiana reguły w skrzynce, bez zmian na stronie. Te same oznaczenia ma temat maila z przycisku zapasowego.
+
 ## Zmiany z 2026-11-19 (uwagi pracownic AWF) – do podmiany na serwerze
 
 Pliki: `index.html`, `app.js`, `data.js`, `i18n.js`, `deklaracja-dostepnosci.html`, `deklaracja-dostepnosci-en.html`. Katalogi `img/` i `fonts/` bez zmian.

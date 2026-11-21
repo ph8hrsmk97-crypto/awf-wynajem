@@ -17,7 +17,19 @@
 /* Ustawienia wdrożenia – do zmiany przez IT przy publikacji produkcyjnej (patrz WDROZENIE.md). */
 const SITE = {
   concept: false,     /* true = pasek „Projekt koncepcyjny” na górze strony; w produkcji: false */
-  enquiryEmail: 'wynajem@awf.edu.pl'    /* adres, na który przycisk „Otwórz w programie pocztowym” kieruje zapytanie, np. dedykowana skrzynka działu wynajmu */
+  enquiryEmail: 'wynajem@awf.edu.pl',   /* skrzynka zapytań; przycisk zapasowy „Wyślij zapytanie e-mailem” (mailto) też kieruje tutaj */
+  enquiryEndpoint: 'zapytanie.php'      /* skrypt na serwerze AWF, który wysyła zapytanie na enquiryEmail; '' = tylko e-mail z programu pocztowego */
+};
+
+/* Oznaczenia w temacie maila, np. „[PLYWALNIA] Zapytanie o wynajem – Pływalnia”.
+ * Skrzynka wynajem@ przekierowuje zapytania regułami według tych oznaczeń (ustalenia z 21.11.2026):
+ *   FILM, PROMOCJA → Kamila Andrzejczuk; PLYWALNIA → Sylwia Ćwik; PILKA, PIKNIK → Daniel Lewandowski;
+ *   EVENT, SALE, INNE → zostają w wynajem@ i są przydzielane ręcznie.
+ * Zmiana osoby = zmiana reguły w skrzynce, nie strony. */
+const EVENT_TYPES = {
+  film:   'Nagranie filmowe, reklama lub sesja zdjęciowa',
+  piknik: 'Piknik lub impreza plenerowa',
+  event:  'Event firmowy, koncert, pokaz lub inne wydarzenie'
 };
 
 const PRICING_SOURCE = {
@@ -385,8 +397,9 @@ const EXTRAS = [
   { id: 'p-f', group: 'parking', label: 'Parking F – 20 miejsc', price: 1650, unit: 'zł/dzień', per: 'day', flag: true },
   { id: 'p-c', group: 'parking', label: 'Parking C – 18 miejsc', price: 1100, unit: 'zł/dzień', per: 'day', flag: true },
   { id: 'p-j', group: 'parking', label: 'Parking J – 12 miejsc', price: 1100, unit: 'zł/dzień', per: 'day', flag: true },
-  { id: 'oneshot', group: 'parking', any: true, label: 'Bilet jednorazowy „One Shot” na wyjazd z terenu AWF', price: 25, unit: 'zł/szt.', per: 'once', qtyLabel: 'szt.', max: 500 },
-  { id: 'karta-dzien', group: 'parking', any: true, label: 'Karta jednodniowa na wjazd i wyjazd', price: 100, unit: 'zł/szt./dzień', per: 'day', qtyLabel: 'szt.', max: 200 },
+  /* bilet i karta – w cenniku ceny BRUTTO (gross: true); kalkulator przelicza je na netto */
+  { id: 'oneshot', group: 'parking', any: true, gross: true, label: 'Bilet jednorazowy „One Shot” na wyjazd z terenu AWF', price: 25, unit: 'zł brutto/szt.', per: 'once', qtyLabel: 'szt.', max: 500 },
+  { id: 'karta-dzien', group: 'parking', any: true, gross: true, label: 'Karta wyjazdowa (1 dzień)', price: 100, unit: 'zł brutto/szt./dzień', per: 'day', qtyLabel: 'szt.', max: 200 },
   { id: 'p-szlaban', group: 'parking', label: 'Otwarcie szlabanu wyjazdowego (12 h)', price: 12000, unit: 'zł/12 h', per: 'day', flag: true },
 
   { id: 'plakat', group: 'promo', label: 'Plakaty A3 na terenie AWF', price: 25, unit: 'zł/szt./tydzień', per: 'once', qtyLabel: 'szt. × tyg.', max: 200 },

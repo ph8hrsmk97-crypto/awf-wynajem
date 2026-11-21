@@ -207,7 +207,13 @@
       if (!q || !e) continue;
       if (e.price == null) { lines.push({ label: d(e.label), detail: d(e.unit), amount: null }); continue; }
       let amount, detail;
-      if (e.per === 'lump') { const p = days >= 4 ? e.price4 : e.price; amount = p; detail = t('lLump', { d: plural(days, 'day') }); }
+      if (e.gross) {
+        /* cena brutto z cennika → netto */
+        const n = e.per === 'day' ? q * days : q;
+        amount = n * e.price / (1 + VAT_RATE);
+        detail = `${e.per === 'day' ? `${q} ${d(e.qtyLabel)} × ${plural(days, 'day')}` : q} × ${zl(e.price)} ${t('gross')}`;
+      }
+      else if (e.per === 'lump') { const p = days >= 4 ? e.price4 : e.price; amount = p; detail = t('lLump', { d: plural(days, 'day') }); }
       else if (e.per === 'once') { amount = e.price * q; detail = `${q} × ${zl(e.price)}`; }
       else {
         const qq = e.flag ? 1 : q;
@@ -640,6 +646,16 @@
     s.warns.forEach(w => L.push('! ' + w));
     return L;
   }
+  /* Oznaczenie tematu maila dla pozycji (na bieżącym stanie) – patrz EVENT_TYPES w data.js. */
+  function routeTag(ev) {
+    if (state.purpose === 'promocja') return 'PROMOCJA';
+    if (state.purpose === 'komercja') return { film: 'FILM', piknik: 'PIKNIK' }[ev] || 'EVENT';
+    if (state.purpose === 'konferencja') return 'SALE';
+    const f = byId(state.facility);
+    if (f?.id === 'plywalnia') return 'PLYWALNIA';
+    if (f?.tags.includes('Piłka nożna')) return 'PILKA';
+    return 'INNE';
+  }
   /* Opis jednej pozycji zapytania (na bieżącym stanie). */
   function positionText(head) {
     const r = compute(), o = currentOption(), L = [];
@@ -661,8 +677,12 @@
     L.push(`${t('qPerson')}: ${v('aPerson')}`);
     L.push(`${t('qContact')}: ${[v('aEmail'), v('aPhone')].filter(Boolean).join(', ')}`);
     if (v('aNip')) L.push(`${t('qNip')}: ${v('aNip')}`);
+    const ev = pos.some(p => p.purpose === 'komercja') ? $('#aEvent').value : '';
+    if (ev) L.push(`${t('qEvent')}: ${d(EVENT_TYPES[ev])}`);
+    const tags = [];
     let net = 0;
     pos.forEach((p, i) => withState(p, () => {
+      const tg = routeTag(ev); if (!tags.includes(tg)) tags.push(tg);
       const x = positionText(many ? `${i + 1}. ${currentName()}` : '');
       L.push('', ...x.L);
       if (many) L.push(t('qSub', { n: zl(x.net) }));
@@ -673,24 +693,58 @@
     L.push('', t(many ? 'qTotalsAll' : 'qTotals', { n: zl(net), v: zl(vat), g: zl(net + vat) }));
     if (v('aNotes')) L.push('', t('qNotes'), v('aNotes'));
     L.push('', t('disclaimer'));
-    return { text: L.join('\n'), many: pos.length };
+    return { text: L.join('\n'), many: pos.length, tags };
+  }
+  let askOpened = 0, sending = false;
+  function renderEventField() {
+    const ev = $('#aEvent'), need = positions().some(p => p.purpose === 'komercja');
+    $('#eventField').hidden = !need; ev.required = need;
+    const cur = ev.value;
+    ev.innerHTML = `<option value="">${t('aEventPick')}</option>` + Object.entries(EVENT_TYPES).map(([k, x]) => `<option value="${k}" ${k === cur ? 'selected' : ''}>${esc(d(x))}</option>`).join('');
   }
   $('#askBtn').addEventListener('click', () => {
     if (!positions().length) { $('#timeSummary').scrollIntoView({ block: 'center' }); return; }
-    $('#askOut').hidden = true; $('#ask').showModal();
+    renderEventField();
+    $('#askOut').hidden = true; $('#sendBtn').disabled = false; askOpened = Date.now(); $('#ask').showModal();
   });
-  $('#askForm').addEventListener('submit', e => {
-    e.preventDefault();
-    const q = inquiryText();
-    $('#askText').textContent = q.text;
-    const subject = q.many > 1 ? t('qSubjectN', { n: plural(q.many, 'item') }) : t('qSubject', { x: currentName() });
+  function showFallback(msg, q, subject) {
     const href = `mailto:${SITE.enquiryEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(q.text)}`;
     $('#mailBtn').href = href;
     /* Niektóre programy pocztowe (np. Outlook w Windows) ucinają bardzo długie odnośniki mailto. */
     $('#askLong').hidden = href.length < 1800;
-    $('#askOut').hidden = false;
+    $('#askMsg').textContent = msg; $('#askMsg').classList.remove('ok');
+    $('#askFallback').hidden = false; $('#askOut').hidden = false;
     $('#mailBtn').focus();
     $('#askOut').scrollIntoView({ block: 'nearest' });
+  }
+  $('#askForm').addEventListener('submit', async e => {
+    e.preventDefault();
+    if (sending) return;
+    const q = inquiryText();
+    $('#askText').textContent = q.text;
+    const base = q.many > 1 ? t('qSubjectN', { n: plural(q.many, 'item') }) : t('qSubject', { x: currentName() });
+    const subject = q.tags.map(x => `[${x}]`).join('') + ' ' + base;
+    if (!SITE.enquiryEndpoint) return showFallback(t('aReady'), q, subject);
+    const v = id => $('#' + id).value.trim();
+    sending = true; const btn = $('#sendBtn'); btn.disabled = true; btn.textContent = t('aSending');
+    try {
+      const res = await fetch(SITE.enquiryEndpoint, {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name: v('aName'), person: v('aPerson'), email: v('aEmail'), phone: v('aPhone'), nip: v('aNip'),
+          subject: base, tags: q.tags, text: q.text, lang, website: $('#aWebsite').value, ms: Date.now() - askOpened })
+      });
+      const r = await res.json().catch(() => ({}));
+      if (!res.ok || !r.ok) throw new Error(r.error || res.status);
+      $('#askMsg').textContent = t('aSent', { x: v('aEmail') }); $('#askMsg').classList.add('ok');
+      $('#askFallback').hidden = true; $('#askOut').hidden = false;
+      $('#askMsg').focus();
+      $('#askOut').scrollIntoView({ block: 'nearest' });
+    } catch (err) {
+      btn.disabled = false;
+      showFallback(t('aFailed'), q, subject);
+    } finally {
+      sending = false; btn.textContent = t('aSubmit');
+    }
   });
   $('#copyBtn').addEventListener('click', () => {
     const txt = $('#askText').textContent;
