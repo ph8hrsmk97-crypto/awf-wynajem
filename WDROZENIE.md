@@ -19,8 +19,10 @@ Skrypt wysyła jeden e-mail na `wynajem@awf.edu.pl` (nadawca: `wynajem@awf.edu.p
 2. Ustawić w skrypcie adres nadawcy (`FROM`) dozwolony dla serwera (SPF/DKIM `awf.edu.pl`), żeby poczta nie trafiała do spamu.
 3. Cloudflare: nie blokować zapytań POST do `/zapytanie.php` (wyzwanie „bot fight” zablokowałoby wysyłkę). CSP: `connect-src 'self'`, jeśli ustawione jest `default-src`.
 4. Test: wysłać zapytanie ze strony i sprawdzić, czy doszło na wynajem@ z oznaczeniem w temacie.
+5. Dać Kanclerzowi dostęp do skrzynki wynajem@ (do dodania w Poczcie na Macu).
 
-**Reguły w skrzynce wynajem@awf.edu.pl** (temat zaczyna się od oznaczeń w nawiasach, np. `[PLYWALNIA]`; przy kilku obiektach – kilka oznaczeń):
+**Rozdział zgłoszeń** – reguły w Poczcie na komputerze Kanclerza (skrzynka wynajem@ dodana do Poczty; decyzja z 21.11.2026, IT nie ustawia reguł).
+Temat zaczyna się od oznaczeń w nawiasach, np. `[PLYWALNIA]`; przy kilku obiektach – kilka oznaczeń:
 
 | Oznaczenie w temacie | Kiedy | Przekierować do |
 |---|---|---|
@@ -31,7 +33,7 @@ Skrypt wysyła jeden e-mail na `wynajem@awf.edu.pl` (nadawca: `wynajem@awf.edu.p
 | `[PIKNIK]` | wydarzenie komercyjne – piknik, impreza plenerowa | Daniel Lewandowski |
 | `[EVENT]`, `[SALE]`, `[INNE]` | pozostałe wydarzenia, sale szkoleniowe, inne obiekty | zostają w wynajem@, przydział ręczny |
 
-Zmiana osoby lub podział „wg obłożenia” = zmiana reguły w skrzynce, bez zmian na stronie. Te same oznaczenia ma temat maila z przycisku zapasowego.
+Zmiana osoby lub podział „wg obłożenia” = zmiana reguły w Poczcie, bez zmian na stronie. Reguły działają, gdy Mac jest włączony, a Poczta otwarta – maile, które przyjdą w międzyczasie, zostaną przekazane po jej otwarciu. Te same oznaczenia ma temat maila z przycisku zapasowego.
 
 ## Zmiany z 2026-11-19 (uwagi pracownic AWF) – do podmiany na serwerze
 
