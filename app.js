@@ -705,11 +705,17 @@
   $('#askBtn').addEventListener('click', () => {
     if (!positions().length) { $('#timeSummary').scrollIntoView({ block: 'center' }); return; }
     renderEventField();
-    $('#askOut').hidden = true; $('#sendBtn').disabled = false; askOpened = Date.now(); $('#ask').showModal();
+    $('#askOut').hidden = true; $('#sendBtn').disabled = false; $('#sendBtn').textContent = t(SITE.enquiryEndpoint ? 'aSubmit' : 'aPrepare');
+    askOpened = Date.now(); $('#ask').showModal();
   });
   function showFallback(msg, q, subject) {
-    const href = `mailto:${SITE.enquiryEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(q.text)}`;
+    const to = encodeURIComponent(SITE.enquiryEmail), su = encodeURIComponent(subject), bo = encodeURIComponent(q.text);
+    const href = `mailto:${SITE.enquiryEmail}?subject=${su}&body=${bo}`;
     $('#mailBtn').href = href;
+    /* Poczta w przeglądarce – dla osób bez programu pocztowego w komputerze. */
+    $('#gmailBtn').href = `https://mail.google.com/mail/?view=cm&fs=1&to=${to}&su=${su}&body=${bo}`;
+    $('#m365Btn').href = `https://outlook.office.com/mail/deeplink/compose?to=${to}&subject=${su}&body=${bo}`;
+    $('#outlookBtn').href = `https://outlook.live.com/mail/0/deeplink/compose?to=${to}&subject=${su}&body=${bo}`;
     /* Niektóre programy pocztowe (np. Outlook w Windows) ucinają bardzo długie odnośniki mailto. */
     $('#askLong').hidden = href.length < 1800;
     $('#askMsg').textContent = msg; $('#askMsg').classList.remove('ok');
@@ -724,7 +730,7 @@
     $('#askText').textContent = q.text;
     const base = q.many > 1 ? t('qSubjectN', { n: plural(q.many, 'item') }) : t('qSubject', { x: currentName() });
     const subject = q.tags.map(x => `[${x}]`).join('') + ' ' + base;
-    if (!SITE.enquiryEndpoint) return showFallback(t('aReady'), q, subject);
+    if (!SITE.enquiryEndpoint) return showFallback(t('aReady', { x: SITE.enquiryEmail }), q, subject);
     const v = id => $('#' + id).value.trim();
     sending = true; const btn = $('#sendBtn'); btn.disabled = true; btn.textContent = t('aSending');
     try {
@@ -743,7 +749,7 @@
       btn.disabled = false;
       showFallback(t('aFailed'), q, subject);
     } finally {
-      sending = false; btn.textContent = t('aSubmit');
+      sending = false; btn.textContent = t(SITE.enquiryEndpoint ? 'aSubmit' : 'aPrepare');
     }
   });
   $('#copyBtn').addEventListener('click', () => {
@@ -769,6 +775,7 @@
     $('#kontakt').innerHTML = CONTACTS.map(c => `<div class="contact"><b>${esc(c.name)}</b><div>${esc(c.email)}</div><div>tel. ${esc(c.phone)}</div><div class="muted">${t('contactRole')}</div></div>`).join('');
     $('#askLead').textContent = t('askLead', { x: SITE.enquiryEmail });
     $('#askAfter').textContent = t('aAfter', { x: SITE.enquiryEmail });
+    $('#sendBtn').textContent = t(SITE.enquiryEndpoint ? 'aSubmit' : 'aPrepare');
     $('#srcBase').textContent = t('srcBase', { x: PRICING_SOURCE.base });
     $('#srcChange').textContent = t('srcChange', { x: PRICING_SOURCE.change });
     $('#bipLink').href = PRICING_SOURCE.bipUrl;

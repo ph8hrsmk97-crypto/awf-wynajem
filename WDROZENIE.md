@@ -4,22 +4,15 @@
 > Repozytorium zawiera już wersję produkcyjną: lokalne czcionki (`fonts/`), `concept: false`, bez blokady indeksowania,
 > z poprawionymi zakresami `unicode-range` oraz nowymi plikami poniżej. Wystarczy podmienić pliki na serwerze.
 
-## Zmiany z 2026-11-21 – wysyłka zapytania prosto ze strony
+## Zmiany z 2026-11-23 – wysyłka zapytania z poczty klienta (bez skryptu na serwerze)
 
-Pliki: `index.html`, `app.js`, `data.js`, `i18n.js` oraz **nowy** `zapytanie.php`. Po wgraniu wyczyścić cache Cloudflare.
+Pliki: `index.html`, `app.js`, `data.js`, `i18n.js`. Po wgraniu wyczyścić cache Cloudflare.
+IT nie uruchamia skryptu PHP na serwerze (odpowiedź z 23.11.2026), więc skrypt `zapytanie.php` usunięto z repozytorium – **nie wgrywać go**.
 
-**Jak działa:** przycisk „Wyślij zapytanie” wysyła dane formularza (POST, JSON) do `zapytanie.php` w tym samym katalogu co strona.
-Skrypt wysyła jeden e-mail na `wynajem@awf.edu.pl` (nadawca: `wynajem@awf.edu.pl`, „Odpowiedz do”: adres klienta) i niczego nie zapisuje
-(poza skrótem adresu IP do limitu 5 zapytań na 10 minut). Jeśli wysyłka się nie uda, strona pokazuje zapasowy przycisk
-„Wyślij zapytanie e-mailem” (mailto) – strona działa więc także przed konfiguracją skryptu.
-
-**Do zrobienia przez IT:**
-1. Wgrać `zapytanie.php`; serwer musi obsługiwać PHP 7.4+ i wysyłkę funkcją `mail()` (sendmail/postfix albo przekaźnik SMTP Microsoft 365).
-   Inna technologia na serwerze → skrypt jest krótki, można go przepisać; ważne: stały adresat, walidacja pól, brak nowych linii w nagłówkach.
-2. Ustawić w skrypcie adres nadawcy (`FROM`) dozwolony dla serwera (SPF/DKIM `awf.edu.pl`), żeby poczta nie trafiała do spamu.
-3. Cloudflare: nie blokować zapytań POST do `/zapytanie.php` (wyzwanie „bot fight” zablokowałoby wysyłkę). CSP: `connect-src 'self'`, jeśli ustawione jest `default-src`.
-4. Test: wysłać zapytanie ze strony i sprawdzić, czy doszło na wynajem@ z oznaczeniem w temacie.
-5. Dać Kanclerzowi dostęp do skrzynki wynajem@ (do dodania w Poczcie na Macu).
+**Jak działa:** strona przygotowuje treść zapytania i otwiera nową wiadomość na `wynajem@awf.edu.pl` w poczcie klienta:
+program pocztowy (mailto), Gmail, Outlook – Microsoft 365 albo Outlook.com (w przeglądarce, nowa karta); zapasowo kopiowanie treści.
+Strona niczego nie wysyła na serwer. W `data.js` jest ustawienie `enquiryEndpoint` – puste; gdyby kiedyś powstała usługa wysyłki
+(np. w Microsoft 365), wystarczy wpisać tam jej adres.
 
 **Rozdział zgłoszeń** – reguły w Poczcie na komputerze Kanclerza (skrzynka wynajem@ dodana do Poczty; decyzja z 21.11.2026, IT nie ustawia reguł).
 Temat zaczyna się od oznaczeń w nawiasach, np. `[PLYWALNIA]`; przy kilku obiektach – kilka oznaczeń:

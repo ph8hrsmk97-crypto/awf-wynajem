@@ -625,12 +625,16 @@ footer p { margin: 0 0 6px; }
     <div class="hp" aria-hidden="true"><label>Strona www <input id="aWebsite" type="text" tabindex="-1" autocomplete="off"></label></div>
     <label class="field"><span data-i18n="aNotes"></span><textarea id="aNotes" data-i18n-ph="aNotesPh"></textarea></label>
     <p class="note" data-i18n="aRodo"></p>
-    <button class="btn" type="submit" id="sendBtn" data-i18n="aSubmit"></button>
+    <button class="btn" type="submit" id="sendBtn"></button>
     <div id="askOut" hidden>
       <p class="lead ask-msg" id="askMsg" tabindex="-1" role="status" style="margin-top:14px"></p>
       <div id="askFallback">
-        <div style="display:flex;gap:8px;flex-wrap:wrap;margin:10px 0">
+        <p class="note" data-i18n="aSendVia" style="margin-top:10px"></p>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin:6px 0 10px">
           <a class="btn" id="mailBtn" href="#" data-i18n="aMail"></a>
+          <a class="btn ghost" id="gmailBtn" href="#" target="_blank" rel="noopener" data-i18n="aGmail"></a>
+          <a class="btn ghost" id="m365Btn" href="#" target="_blank" rel="noopener" data-i18n="aM365"></a>
+          <a class="btn ghost" id="outlookBtn" href="#" target="_blank" rel="noopener" data-i18n="aOutlook"></a>
         </div>
         <p class="note" id="askAfter"></p>
         <p class="note warn" id="askLong" hidden data-i18n="aLong"></p>

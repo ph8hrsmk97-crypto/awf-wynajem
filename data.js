@@ -18,7 +18,8 @@
 const SITE = {
   concept: false,     /* true = pasek „Projekt koncepcyjny” na górze strony; w produkcji: false */
   enquiryEmail: 'wynajem@awf.edu.pl',   /* skrzynka zapytań; przycisk zapasowy „Wyślij zapytanie e-mailem” (mailto) też kieruje tutaj */
-  enquiryEndpoint: 'zapytanie.php'      /* skrypt na serwerze AWF, który wysyła zapytanie na enquiryEmail; '' = tylko e-mail z programu pocztowego */
+  enquiryEndpoint: ''                   /* adres usługi wysyłającej zapytanie (POST, JSON); '' = klient wysyła e-mail sam (program pocztowy, Gmail, Outlook).
+                                           IT AWF nie uruchamia skryptu na serwerze (23.11.2026), dlatego pusto. */
 };
 
 /* Oznaczenia w temacie maila, np. „[PLYWALNIA] Zapytanie o wynajem – Pływalnia”.
